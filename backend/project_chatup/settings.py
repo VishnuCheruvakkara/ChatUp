@@ -3,6 +3,7 @@ import os
 import sys
 from pathlib import Path
 import environ 
+from datetime import timedelta
 
 
 env = environ.Env()
@@ -54,9 +55,18 @@ CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS")
 
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_COOKIE_SECURE = False # True in production 
-CSRF_COOKIE_HTTPONLY = False 
-CSRF_COOKIE_SAMESITE = 'None'
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': False,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_COOKIE_ACCESS': 'access_token',         # Custom
+    'AUTH_COOKIE_REFRESH': 'refresh_token',       # Custom
+    'AUTH_COOKIE_HTTP_ONLY': True,
+    'AUTH_COOKIE_SECURE': False,           # True in production with HTTPS
+    'AUTH_COOKIE_SAMESITE': 'Lax',
+}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -70,6 +80,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'project_chatup.urls'
+AUTH_USER_MODEL =  'users.User'
 
 TEMPLATES = [
     {
