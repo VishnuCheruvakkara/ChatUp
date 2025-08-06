@@ -1,6 +1,8 @@
+import logging
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 from django.conf import settings 
-
+#Create logger
+logger = logging.getLogger(__name__)
 
 def set_jwt_cookies(response,user):
     """Unitlity for set jwt token in cookies"""
@@ -37,8 +39,10 @@ def clear_jwt_cookies(response,request=None):
             try:
                 token = RefreshToken(refresh_token) 
                 token.blacklist()
-            except TokenError:
-                pass
+                logger.info("Refresh token blacklisted successfully.")
+            except TokenError as e:
+                logger.warning(f"Failed to balcklist token: {str(e)}")
+                
     response.delete_cookies(settings.SIMPLE_JWT['AUTH_COOKIE_ACCESS'])
     response.delete_cookies(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'])
     return response 

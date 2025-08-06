@@ -1,9 +1,10 @@
-
+import logging
 import os
 import sys
 from pathlib import Path
 import environ 
 from datetime import timedelta
+
 
 
 env = environ.Env()
@@ -158,3 +159,18 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Logger setup for debug in both production and development
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
+}
