@@ -13,9 +13,9 @@ function LandingLayout() {
 
 
             {/* Hero Section */}
-            <section className="w-full min-h-[80vh] bg-bgLight  flex flex-col md:flex-row items-center justify-between px-6 lg:px-40 py-10">
+            <section className="w-full min-h-[80vh] bg-bgBase  flex flex-col md:flex-row items-center justify-between sm:px-6 px-6 lg:px-40 py-10">
                 {/* Left Side: Text */}
-                <div className="flex-1 text-center md:text-left space-y-6">
+                <div className="flex-1 sm:w-[400px] w-full md:text-left space-y-6">
                    <Outlet />
                 </div>
 
