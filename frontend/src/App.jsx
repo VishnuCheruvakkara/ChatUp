@@ -1,19 +1,13 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { BrowserRouter} from 'react-router-dom'
+import RouteConfig from './routes/RouteConfig'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-
-    <>
-      <div className="bg-red-700 h-full ">
-
-        <h1 className="font-semibold text-white text-center " >Hello world</h1>
-      </div>
-
-    </>
+    <BrowserRouter>
+      <RouteConfig/>
+    </BrowserRouter>
   )
 }
 
