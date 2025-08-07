@@ -1,15 +1,17 @@
-import {Routes,Route} from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
+import LandingLayout from '../layout/LandingLayout'
 import LandingPage from '../pages/LandingPage'
-// import Login from ""
-// import SignUp from ""
+import SignIn from '../pages/SignIn'
+import SignUp from '../pages/SignUp'
 
-
-function PublicRoutes(){
-    return(
+function PublicRoutes() {
+    return (
         <Routes>
-            <Route path="/" element={<LandingPage/>} />
-            {/* <Route path="/login" element={<Login/>} />
-            <Route path="/signup" element={<SignUp/>} /> */}
+            <Route element={<LandingLayout/>}>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/sign-in" element={<SignIn />} />
+                <Route path="/sign-up" element={<SignUp />} />
+            </Route>
         </Routes>
     )
 }

@@ -2,7 +2,7 @@ import { FaLinkedin, FaInstagram, FaGithub } from 'react-icons/fa';
 
 const Footer = () => {
     return (
-        <footer className="w-full p-3 text-gray-600 bg-bgBase border-t border-primary">
+        <footer className="w-full py-3 sm:px-10 px-3  text-gray-600 bg-bgBase border-t border-primary">
             <div className="flex flex-col md:flex-row justify-between items-center">
                 <div className="mb-4 md:mb-0 text-center md:text-left text-xs font-semibold">
                     © {new Date().getFullYear()} ChatUP. All rights reserved. Developed by:
