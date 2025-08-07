@@ -2,8 +2,12 @@ import { Formik, Form } from "formik";
 import InputField from "../components/InputField";
 import signUpValidationSchema from "../utils/signUpValidationSchemas";
 import Button from "../components/Button";
+import publicAxios from "../axios/publicAxios";
+import { useNavigate } from "react-router-dom";
 
 function SignUp() {
+    const navigate = useNavigate()
+
     const initialValues = {
         username: '',
         email: '',
@@ -11,12 +15,17 @@ function SignUp() {
         confirmPassword: '',
     };
 
-    const handleSubmit = (values) =>{
-        alert("Value submitted!")
+    const handleSubmit = async (values) =>{
+        try{
+            const response = await publicAxios.post('/users/register/',values)
+            navigate('/user/dashboard')
+        }catch(error){
+            console.error("Register new user error:",error)
+        }
     }
 
     return (
-        <div classname=" mt-10 ">
+        <div className=" mt-10 ">
             <h2 className="text-xl font-bold text-primary mb-4 ">Sign Up</h2>
             <Formik initialValues={initialValues} validationSchema={signUpValidationSchema} onSubmit={handleSubmit}>
                 <Form>

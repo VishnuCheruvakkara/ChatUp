@@ -1,13 +1,15 @@
+import logging
 from django.shortcuts import render
 from rest_framework.views import APIView 
 from rest_framework.response import Response 
-from .serializers import RegisterAccountSerializer,LoginAccountSerializer
+from .serializers import RegisterAccountSerializer,LoginAccountSerializer,UserSerializer
 from .utils import set_jwt_cookies,clear_jwt_cookies
 from rest_framework.permissions import AllowAny
 from rest_framework import status
 from django.conf import settings
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
+logger = logging.getLogger(__name__)
 
 class RegisterAccount(APIView):
     permission_classes = [AllowAny]
@@ -42,13 +44,21 @@ class LogoutAccount(APIView):
         response = Response({"message":"Logout successful."},status=status.HTTP_200_OK)    
         return clear_jwt_cookies(response)
     
+class GetUserProfile(APIView):
+    def get(self,request):
+        user = request.user 
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
 class RefreshTokenView(APIView):
     """ Generate new access token with refresh token if access token is expired."""
     permission_classes = [AllowAny]
 
     def post(self,request):
+        logger.info(f"Incomming cookies : {request.COOKIES}")
         refresh_token = request.COOKIES.get(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'])
-
+        logger.debug(f"Extracted refresh token: {refresh_token}")
+        
         if refresh_token is None:
             return Response({"detail":"Session expired. Please log in again."},status=status.HTTP_401_UNAUTHORIZED)
         

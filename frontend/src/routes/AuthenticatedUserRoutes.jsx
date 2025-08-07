@@ -1,10 +1,9 @@
 import {Routes,Route,Navigate} from 'react-router-dom'
-// import Dashboard from ""
-
+import UserDashboardLayout from '../layout/userDashboardLayout'
 function AuthenticatedUserRoutes(){
     return(
         <Routes>
-            {/* <Route path="/" element={<DashBoard/>} /> */}
+            <Route path="/dashboard" element={<UserDashboardLayout/>} />
         </Routes>
     )
 }

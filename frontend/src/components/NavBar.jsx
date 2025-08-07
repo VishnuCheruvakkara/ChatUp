@@ -13,7 +13,7 @@ function NavBar() {
                 <h1 className="sm:text-2xl text-xl font-bold">ChatUP</h1>
             </div>
             <nav className=" flex gap-3">
-
+                <Button>Sign Out</Button>
                 <Button onClick={() => navigate('/sign-in')} className="bg-transparent text-primary border-2 hover:bg-primary hover:text-white border-primary" >Login</Button>
                 <Button onClick={() => navigate('/sign-up')} >Sign Up</Button>
             </nav>

@@ -43,8 +43,8 @@ def clear_jwt_cookies(response,request=None):
             except TokenError as e:
                 logger.warning(f"Failed to balcklist token: {str(e)}")
                 
-    response.delete_cookies(settings.SIMPLE_JWT['AUTH_COOKIE_ACCESS'])
-    response.delete_cookies(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'])
+    response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE_ACCESS'])
+    response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'])
     return response 
 
    
