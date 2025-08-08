@@ -70,10 +70,10 @@ export function ToastProvider({ children }) {
 
 function Toast({ id, type, onClose, children, isClosing }) {
   const colors = {
-    success: "bg-green-500 text-white",
+    success: "bg-accent text-black",
     error: "bg-red-400 text-white",
     warning: "bg-yellow-400 text-black",
-    info: "bg-blue-600 text-white",
+    info: "bg-blue-400 text-white",
   };
 
   return (

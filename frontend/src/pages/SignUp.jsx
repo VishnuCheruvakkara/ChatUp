@@ -6,10 +6,12 @@ import Button from "../components/Button";
 import publicAxios from "../axios/publicAxios";
 import { useNavigate } from "react-router-dom";
 import PageLoader from "../components/PageLoader";
+import { useToast } from '../components/Toast';
 
 function SignUp() {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
+    const {showToast} = useToast();
 
     const initialValues = {
         username: '',
@@ -23,8 +25,10 @@ function SignUp() {
         try {
             const response = await publicAxios.post('/users/register/', values)
             navigate('/user/dashboard')
+            showToast('Account created successfully.',"success")
         } catch (error) {
             console.error("Register new user error:", error)
+            showToast('Try again. Error happen to sign up.',"error")
         } finally {
             setLoading(false);
         }
