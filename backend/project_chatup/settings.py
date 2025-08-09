@@ -1,8 +1,10 @@
-
+import logging
 import os
 import sys
 from pathlib import Path
 import environ 
+from datetime import timedelta
+
 
 
 env = environ.Env()
@@ -40,12 +42,16 @@ INSTALLED_APPS = [
     # Third party apps 
     'rest_framework',
     'corsheaders',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+        'apps.users.authentication.JWTCookieAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
 }
 
 CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS")
@@ -54,9 +60,18 @@ CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS")
 
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_COOKIE_SECURE = False # True in production 
-CSRF_COOKIE_HTTPONLY = False 
-CSRF_COOKIE_SAMESITE = 'None'
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=2),
+    'BLACKLIST_AFTER_ROTATION': True,
+    'ROTATE_REFRESH_TOKENS': True,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_COOKIE_ACCESS': 'access_token',         # Custom
+    'AUTH_COOKIE_REFRESH': 'refresh_token',       # Custom
+    'AUTH_COOKIE_HTTP_ONLY': True,
+    'AUTH_COOKIE_SECURE': True,          
+    'AUTH_COOKIE_SAMESITE': 'None',
+}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -70,6 +85,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'project_chatup.urls'
+AUTH_USER_MODEL =  'users.User'
 
 TEMPLATES = [
     {
@@ -143,3 +159,18 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Logger setup for debug in both production and development
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
+}
