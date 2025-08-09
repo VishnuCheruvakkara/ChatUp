@@ -7,8 +7,10 @@ import PageLoader from "./PageLoader";
 import { useSelector } from "react-redux";
 import { clearUser } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
+import { useToast } from "./Toast";
 
 function NavBar() {
+    const {showToast} = useToast();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
@@ -19,6 +21,7 @@ function NavBar() {
         try {
             const response = await publicAxios.post('/users/logout/')
             dispatch(clearUser());
+            showToast("Logout successfully","success")
             navigate('/')
         } catch (error) {
             console.error("Error while logout:", error)
