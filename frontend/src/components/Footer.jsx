@@ -1,4 +1,5 @@
 import { FaLinkedin, FaInstagram, FaGithub } from 'react-icons/fa';
+import { BsGlobe } from "react-icons/bs";
 
 const Footer = () => {
     return (
@@ -11,7 +12,15 @@ const Footer = () => {
 
                 <div className="flex gap-8 ">
                     <a
-                        href="https://linkedin.com/in/YOUR_LINKEDIN"
+                        href="https://vishnu-cheruvakkara-portfolio.vercel.app/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-10 h-10 flex items-center justify-center rounded-full border border-primary text-primary hover:bg-primary transition duration-300 hover:text-bgBase"
+                    >
+                        <BsGlobe size={20} />
+                    </a>
+                    <a
+                        href="https://www.linkedin.com/in/vishnu-cheruvakkara-231b8b235/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-10 h-10 flex items-center justify-center rounded-full border border-primary text-primary hover:bg-primary transition duration-300 hover:text-bgBase"
@@ -20,7 +29,7 @@ const Footer = () => {
                     </a>
 
                     <a
-                        href="https://instagram.com/YOUR_INSTAGRAM"
+                        href="https://www.instagram.com/vishnu_c_dev/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-10 h-10 flex items-center justify-center rounded-full border border-primary text-primary hover:bg-primary transition duration-300 hover:text-bgBase"
@@ -30,7 +39,7 @@ const Footer = () => {
                     </a>
 
                     <a
-                        href="https://github.com/YOUR_GITHUB"
+                        href="https://github.com/VishnuCheruvakkara"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-10 h-10 flex items-center justify-center rounded-full border border-primary text-primary hover:bg-primary transition duration-300 hover:text-bgBase"
