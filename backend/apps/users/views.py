@@ -32,7 +32,8 @@ class LoginAccount(APIView):
         serializer = LoginAccountSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.validated_data["user"]
-            response = Response({"message":"Login successfull"},status=status.HTTP_200_OK)
+            user_data = UserSerializer(user).data
+            response = Response({"message":"Login successfull","user":user_data},status=status.HTTP_200_OK)
             return set_jwt_cookies(response, user)
         else:
             return Response(serializer.errors,status = status.HTTP_401_UNAUTHORIZED)

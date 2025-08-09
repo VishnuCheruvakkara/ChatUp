@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useCallback } from "react";
 import { IoMdClose } from "react-icons/io";
+import { registerToastFunction } from "../services/ToastService";
 
 const ToastContext = createContext();
 
@@ -30,6 +31,11 @@ export function ToastProvider({ children }) {
       }, 300); // must match fade-out animation duration
     }, duration);
   }, []);
+
+  React.useEffect(() => {
+    registerToastFunction(showToast);
+  }, [showToast]);
+
 
   // Remove toast on manual close with fade out
   const removeToast = useCallback((id) => {

@@ -1,5 +1,8 @@
 import axios from 'axios';
+import { showGlobalToast } from '../services/ToastService';
+import { navigateTo } from '../services/navigationService';
 
+let isSessionExpiredHandle = false;
 const userAxios = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
     withCredentials: true,
@@ -13,17 +16,20 @@ const refreshAxios = axios.create({
 // Auto refresh access token request logic 
 userAxios.interceptors.response.use(
     (response) => response,
-    async (error) =>{
+    async (error) => {
         const originalRequest = error.config;
-        if (error.response?.status === 401 && !originalRequest._retry){
+        if (error.response?.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
-            try{
+            try {
                 await refreshAxios.post('/users/token/refresh/');
                 return userAxios(originalRequest);
-            }catch(refreshError){
-                console.error('Token refresh failed',refreshError);
-                alert("Session expired. Please log in again.");
-                window.location.href = '/';
+            } catch (refreshError) {
+                if (!isSessionExpiredHandle) {
+                    isSessionExpiredHandle = true
+                    console.error('Token refresh failed', refreshError);
+                    showGlobalToast("Session expired. Please log in again.", "warning");
+                    navigateTo('/');
+                }
                 return;
             }
         }

@@ -7,9 +7,12 @@ import publicAxios from "../axios/publicAxios";
 import { useNavigate } from "react-router-dom";
 import PageLoader from "../components/PageLoader";
 import { useToast } from '../components/Toast';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../redux/userSlice';
 
 function SignIn() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const {showToast} = useToast();
 
@@ -22,6 +25,7 @@ function SignIn() {
         setLoading(true);
         try {
             const response = await publicAxios.post('/users/login/', values)
+            dispatch(setUser(response.data.user))
             showToast("Login successful!", "success");
             navigate('/user/dashboard')
         } catch (error) {

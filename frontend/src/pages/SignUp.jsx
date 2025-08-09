@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import { Formik, Form } from "formik";
 import InputField from "../components/InputField";
 import signUpValidationSchema from "../utils/signUpValidationSchemas";
@@ -7,11 +7,14 @@ import publicAxios from "../axios/publicAxios";
 import { useNavigate } from "react-router-dom";
 import PageLoader from "../components/PageLoader";
 import { useToast } from '../components/Toast';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../redux/userSlice';
 
 function SignUp() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
-    const {showToast} = useToast();
+    const { showToast } = useToast();
 
     const initialValues = {
         username: '',
@@ -24,11 +27,12 @@ function SignUp() {
         setLoading(true);
         try {
             const response = await publicAxios.post('/users/register/', values)
+            dispatch(setUser(response.data.user))
             navigate('/user/dashboard')
-            showToast('Account created successfully.',"success")
+            showToast('Account created successfully.', "success")
         } catch (error) {
             console.error("Register new user error:", error)
-            showToast('Try again. Error happen to sign up.',"error")
+            showToast('Try again. Error happen to sign up.', "error")
         } finally {
             setLoading(false);
         }
@@ -36,7 +40,7 @@ function SignUp() {
 
     return (
         <>
-            {loading && <PageLoader/>}
+            {loading && <PageLoader />}
             <div className=" mt-10 ">
                 <h2 className="text-xl font-bold text-primary mb-4 ">Sign Up</h2>
                 <Formik initialValues={initialValues} validationSchema={signUpValidationSchema} onSubmit={handleSubmit}>
