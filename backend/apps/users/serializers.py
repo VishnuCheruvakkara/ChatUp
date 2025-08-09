@@ -1,6 +1,5 @@
 from rest_framework import serializers 
 from django.contrib.auth import get_user_model 
-from rest_framework.validators import UniqueValidator
 from django.core.validators import RegexValidator
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import authenticate 
@@ -8,14 +7,23 @@ from django.contrib.auth import authenticate
 User = get_user_model()
 
 class RegisterAccountSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(max_length=150,validators=[RegexValidator(regex='^[a-zA-Z]+$',message='Username must contain only letters.',code='invalid_username')])
-    email = serializers.EmailField(required=True,validators=[UniqueValidator(queryset=User.objects.all())])
+    username = serializers.CharField(max_length=150,validators=[RegexValidator(regex=r'^(?=.*[A-Za-z])[A-Za-z0-9_]+$',message='Username is not valid',code='invalid_username')])
+    email = serializers.EmailField(required=True)
     password = serializers.CharField(write_only=True,validators=[validate_password])
 
     class Meta:
         model = User 
         fields = ['username','email','password']
 
+    def validate(self,attrs):
+        username = attrs.get('username')
+        email = attrs.get('email')
+
+        if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
+            raise serializers.ValidationError("Email or username already taken.")
+
+        return attrs
+    
     def create(self,validated_data):
         return User.objects.create_user(**validated_data)
     

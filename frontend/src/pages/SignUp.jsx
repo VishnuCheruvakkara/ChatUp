@@ -32,7 +32,12 @@ function SignUp() {
             showToast('Account created successfully.', "success")
         } catch (error) {
             console.error("Register new user error:", error)
-            showToast('Try again. Error happen to sign up.', "error")
+            const nonFieldErrors = error.response?.data?.non_field_errors;
+            if (nonFieldErrors && nonFieldErrors.length > 0) {
+                showToast(nonFieldErrors[0], "error"); // show the first error message
+            } else {
+                showToast('Try again. Error happened during sign up.', "error");
+            }
         } finally {
             setLoading(false);
         }
@@ -52,6 +57,7 @@ function SignUp() {
                         <Button className="w-full xl:w-[400px] py-3 rounded-lg " type="submit">Sign Up</Button>
                     </Form>
                 </Formik>
+                <p className="text-sm mt-4 font-semibold text-gray-600">Allready have an account, <span onClick={() => navigate('/sign-in')} className="text-primary cursor-pointer hover:text-accent transition duration-200 ease-in-out"> Sign In ? </span></p>
             </div>
         </>
 

@@ -48,6 +48,7 @@ function SignIn() {
                         <Button className="w-full xl:w-[400px] py-3 rounded-lg " type="submit">Sign In</Button>
                     </Form>
                 </Formik>
+                <p className="text-sm mt-4 font-semibold text-gray-600">Don't have an account, <span onClick={()=>navigate('/sign-up')} className="text-primary cursor-pointer hover:text-accent transition duration-200 ease-in-out"> Sign Up ? </span></p>
             </div>
         </>
 
