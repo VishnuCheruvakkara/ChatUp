@@ -10,6 +10,9 @@ class ChatRoom(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        ordering = ['-created_at']
 
 class Chat(models.Model):
     room = models.ForeignKey(ChatRoom,on_delete=models.CASCADE,related_name="chats")

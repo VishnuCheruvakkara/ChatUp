@@ -11,7 +11,6 @@ function LandingLayout() {
             {/* NavBar */}
             <NavBar />
 
-
             {/* Hero Section */}
             <section className="w-full min-h-[80vh] bg-bgBase  flex flex-col md:flex-row items-center justify-between sm:px-6 px-6 lg:px-40 py-10">
                 {/* Left Side: Text */}

@@ -1,13 +1,14 @@
 import { useField } from "formik";
 
-function InputField({ label, ...props }) {
+function InputField({ label, as="input", ...props }) {
   const [field, meta] = useField(props);
   const error = meta.touched && meta.error;
+  const Component = as;
 
   return (
     <div className="mb-6">
       <div className="relative">
-        <input
+        <Component
           {...field}
           {...props}
           id={props.name}
@@ -15,7 +16,7 @@ function InputField({ label, ...props }) {
           aria-describedby={`${props.name}_help`}
           className={`peer block xl:w-[400px] w-full px-2.5 py-3  text-sm font-semibold text-gray-500 
             bg-transparent rounded-lg border appearance-none 
-            focus:outline-none focus:ring-0 
+            focus:outline-none focus:ring-0
             ${error
               ? 'border-red-500 focus:border-red-500'
               : 'border-accent focus:border-primary'}
