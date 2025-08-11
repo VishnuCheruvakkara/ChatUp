@@ -5,6 +5,7 @@ from rest_framework import status
 from chat.models import ChatRoom
 from rest_framework.pagination import PageNumberPagination
 from django.db.models import Q 
+from django.shortcuts import get_object_or_404
 
 class CreateChatRoom(APIView):
     def post(self,request):
@@ -22,9 +23,9 @@ class GetChatRooms(APIView):
         search = request.query_params.get('search','')
 
         if mine == 'true':
-            rooms = ChatRoom.objects.filter(created_by=request.user)
+            rooms = ChatRoom.objects.filter(created_by=request.user,is_deleted=False)
         else:
-            rooms = ChatRoom.objects.all()
+            rooms = ChatRoom.objects.filter(is_deleted=False)
 
         if search:
             rooms = rooms.filter(
@@ -36,3 +37,10 @@ class GetChatRooms(APIView):
 
         serializer = ChatRoomSerializer(paginated_rooms,many=True)
         return paginator.get_paginated_response(serializer.data)
+    
+class DeleteRoom(APIView):
+    def post(self,request,room_id):
+        room = get_object_or_404(ChatRoom, id=room_id, created_by=request.user)
+        room.is_deleted = True
+        room.save()
+        return Response({"message":"Room deleted successfully"},status=status.HTTP_200_OK)
