@@ -8,9 +8,13 @@ import { useLocation } from "react-router-dom";
 import Pagination from "../components/Pagination";
 import useModal from "../hooks/useModal";
 import ConfirmationModal from "../components/ConfirmationModal";
+import { useToast } from "../components/Toast";
+import { useNavigate } from "react-router-dom";
 
 function RoomPage() {
+    const navigate = useNavigate();
     const location = useLocation();
+    const {showToast} = useToast();
     const [chatRooms, setChatRooms] = useState(null);
     const [loading, setLoading] = useState(false);
     const [search, setSearch] = useState("");
@@ -30,8 +34,6 @@ function RoomPage() {
         },500),
         []
     )
-
-   
 
     useEffect(() => {
         const getAllChatRooms = async () => {
@@ -62,7 +64,7 @@ function RoomPage() {
     }, [isAllRooms, isMyRooms, search, page, debouncedSearch])
 
     const handleJoin = () => {
-        alert("joining...")
+        navigate("/user/dashboard/chat-room")
     }
 
     const handleDeleteClick = (room) => {
@@ -73,6 +75,7 @@ function RoomPage() {
     const confirmDelete = async (roomId) => {
         try {
             await userAxios.post(`/chat/delete-room/${roomId}/`);
+            showToast("Room deleted successfully","success")
             setChatRooms((prev) => prev.filter((room) => room.id !== roomId));
         } catch (error) {
             console.error("Error deleting room", error);
