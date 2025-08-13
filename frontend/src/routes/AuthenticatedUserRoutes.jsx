@@ -13,7 +13,7 @@ function AuthenticatedUserRoutes() {
                 <Route path="create-room" element={<CreateRoom/>} />
                 <Route path="my-rooms" element={<RoomPage />} />
                 <Route path="all-rooms" element={<RoomPage />} />
-                <Route path="chat-room" element={<ChatPage />} />
+                <Route path="chat-room/:roomId" element={<ChatPage />} />
             </Route>
         </Routes>
     )

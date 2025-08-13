@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
+    'channels',
 ]
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -89,6 +91,15 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'project_chatup.urls'
 AUTH_USER_MODEL =  'users.User'
 
+CHANNEL_LAYERS = {
+    "default":{
+        "BACKEND":"channels_redis.core.RedisChannelLayer",
+        "CONFIG":{
+            "hosts": [("127.0.0.1",6379)],
+        }
+    }
+}
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -105,7 +116,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'project_chatup.wsgi.application'
-
+ASGI_APPLICATION = 'project_chatup.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases

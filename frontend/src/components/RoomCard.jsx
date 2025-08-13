@@ -73,7 +73,7 @@ const RoomsGrid = ({ rooms, onJoinClick, onDeleteClick }) => {
           <RoomCard
             key={room?.id}
             room={room}
-            onJoinClick={() => onJoinClick(room.id)}
+            onJoinClick={() => onJoinClick(room?.id)}
             onDeleteClick={onDeleteClick}
           />
         ))

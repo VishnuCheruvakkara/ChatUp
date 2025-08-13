@@ -63,8 +63,8 @@ function RoomPage() {
 
     }, [isAllRooms, isMyRooms, search, page, debouncedSearch])
 
-    const handleJoin = () => {
-        navigate("/user/dashboard/chat-room")
+    const handleJoin = (roomId) => {
+        navigate(`/user/dashboard/chat-room/${roomId}`)
     }
 
     const handleDeleteClick = (room) => {

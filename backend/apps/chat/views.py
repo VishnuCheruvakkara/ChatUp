@@ -44,3 +44,6 @@ class DeleteRoom(APIView):
         room.is_deleted = True
         room.save()
         return Response({"message":"Room deleted successfully"},status=status.HTTP_200_OK)
+    
+class GetSingleChatRoom(APIView):
+    pass 

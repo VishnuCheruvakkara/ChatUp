@@ -1,9 +1,27 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import ChatHeader from "../components/ChatHeader";
 import ChatBody from "../components/ChatBody";
 import ChatFooter from "../components/ChatFooter";
+import { useParams } from "react-router-dom";
+import userAxios from "../axios/userAuthenticationInterceptor";
 
 const ChatPage = () => {
+  const {roomId} = useParams();
+  const [chatRoom,setChatRoom] = useState(null);
+
+  useEffect(()=>{
+    const getChatRoom = async() =>{
+      try{
+        const response = await userAxios.get(`/chat/get-chat-room/${roomId}`);
+        console.log(response.data);
+        setChatRoom(response.data);
+      }catch(error){
+        console.error("Error happen while fetching room data",error);
+      }
+    };
+    getChatRoom();
+  },[roomId])
+
   const [messages, setMessages] = useState([
     { user: "Alice", text: "Hey there!", time: "10:30 AM" },
     { user: "Me", text: "Hi Alice! How are you?", time: "10:31 AM" },
@@ -23,6 +41,10 @@ const ChatPage = () => {
       },
     ]);
   };
+
+  useEffect (()=>{
+
+  },[])
 
   return (
     <div className="flex border rounded-lg shadow-lg border-primary flex-col h-[500px] w-full max-w-5xl bg-bgBase">
