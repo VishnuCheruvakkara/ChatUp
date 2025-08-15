@@ -46,4 +46,9 @@ class DeleteRoom(APIView):
         return Response({"message":"Room deleted successfully"},status=status.HTTP_200_OK)
     
 class GetSingleChatRoom(APIView):
-    pass 
+    def get(self,request,room_id):
+        room = get_object_or_404(ChatRoom, id=room_id)
+        serializer = ChatRoomSerializer(room)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+
+
