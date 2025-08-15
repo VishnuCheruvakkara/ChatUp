@@ -4,10 +4,12 @@ import ChatBody from "../components/ChatBody";
 import ChatFooter from "../components/ChatFooter";
 import { useParams } from "react-router-dom";
 import userAxios from "../axios/userAuthenticationInterceptor";
+import useChatSocket from "../utils/useChatSocket";
 
 const ChatPage = () => {
   const {roomId} = useParams();
   const [chatRoom,setChatRoom] = useState(null);
+  const [messages,setMessages] = useState([]);
 
   useEffect(()=>{
     const getChatRoom = async() =>{
@@ -22,24 +24,31 @@ const ChatPage = () => {
     getChatRoom();
   },[roomId])
 
-  const [messages, setMessages] = useState([
-    { user: "Alice", text: "Hey there!", time: "10:30 AM" },
-    { user: "Me", text: "Hi Alice! How are you?", time: "10:31 AM" },
-    { user: "Bob", text: "Hello everyone!", time: "10:32 AM" },
-  ]);
+  const {sendMessage} = useChatSocket(roomId,(data)=>{
+    setMessages((prev) =>[
+      ...prev,
+      {
+        user:data.user || "User",
+        text:data.message,
+        time:new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit",hour12:true}),
+      },
+    ])
+  });
 
   const handleSend = (newMessage) => {
     setMessages((prev) => [
       ...prev,
       {
-        user: "Me",
+        user: "You",
         text: newMessage,
         time: new Date().toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
+          hour12:true,
         }),
       },
     ]);
+    sendMessage(newMessage);
   };
 
   useEffect (()=>{

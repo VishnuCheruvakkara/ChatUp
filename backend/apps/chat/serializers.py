@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from chat.models import ChatRoom
+from chat.models import ChatRoom,Chat
 from django.core.validators import RegexValidator
 
 class ChatRoomSerializer(serializers.ModelSerializer):
@@ -12,4 +12,10 @@ class ChatRoomSerializer(serializers.ModelSerializer):
         fields = ['id','name','description','created_at','creator_name','creator_id']
 
     
-  
+class ChatSerializer(serializers.ModelSerializer):
+    creator_id = serializers.IntegerField(source="user.id",read_only=True)
+    username = serializers.CharField(source="user.username",read_only=True)
+
+    class Meta:
+        model = Chat 
+        fields = ["id","user_id","user"]

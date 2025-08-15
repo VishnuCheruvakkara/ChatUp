@@ -56,9 +56,7 @@ class RefreshTokenView(APIView):
     permission_classes = [AllowAny]
 
     def post(self,request):
-        logger.info(f"Incomming cookies : {request.COOKIES}")
         refresh_token = request.COOKIES.get(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'])
-        logger.debug(f"Extracted refresh token: {refresh_token}")
 
         if refresh_token is None:
             return Response({"detail":"Session expired. Please log in again."},status=status.HTTP_401_UNAUTHORIZED)
