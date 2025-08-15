@@ -4,12 +4,14 @@ import ChatBody from "../components/ChatBody";
 import ChatFooter from "../components/ChatFooter";
 import { useParams } from "react-router-dom";
 import userAxios from "../axios/userAuthenticationInterceptor";
-import useChatSocket from "../utils/useChatSocket";
+import useChatSocket from "../hooks/useChatSocket";
+import { useSelector } from "react-redux";
 
 const ChatPage = () => {
   const {roomId} = useParams();
   const [chatRoom,setChatRoom] = useState(null);
   const [messages,setMessages] = useState([]);
+  const currentUserId = useSelector((state)=>state.user.userData?.id)
 
   useEffect(()=>{
     const getChatRoom = async() =>{
@@ -25,27 +27,32 @@ const ChatPage = () => {
   },[roomId])
 
   const {sendMessage} = useChatSocket(roomId,(data)=>{
+    console.log("Message recieved:::",data);
     setMessages((prev) =>[
       ...prev,
       {
-        user:data.user || "User",
+        user:data.username || "User",
         text:data.message,
+        userId: data.user_id,
         time:new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit",hour12:true}),
       },
     ])
   });
 
   const handleSend = (newMessage) => {
+    console.log("Message sent to server ::::",newMessage)
     setMessages((prev) => [
       ...prev,
       {
         user: "You",
         text: newMessage,
+        userId: currentUserId,
         time: new Date().toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
           hour12:true,
         }),
+
       },
     ]);
     sendMessage(newMessage);

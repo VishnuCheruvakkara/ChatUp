@@ -28,7 +28,6 @@ class JWTAuthMiddleware(BaseMiddleware):
                 cookies[name] = value 
 
         token = cookies.get("access_token") 
-        logger.debug("Token",token)
 
         scope["user"] = await get_user_from_token(token) if token else None 
 
