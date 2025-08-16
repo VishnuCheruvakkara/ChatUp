@@ -9,7 +9,7 @@ const ChatHeader = ({ chatRoom, onRoomDetailsClick, onlineUsers}) => {
 
   return (
     <div className="bg-primary rounded-t-lg text-white sm:px-6 px-2 py-3 shadow-md flex items-center justify-between">
-      <div className="flex items-center gap-3 cursor-pointer">
+      <div onClick={onRoomDetailsClick} className="flex items-center gap-3 cursor-pointer">
         {/* Avatar */}
         <div className="shrink-0 h-8 w-8  rounded-full bg-bgBase text-primary flex items-center justify-center font-bold">
           <span className="sm:text-xl text-sm">{firstLetter}</span>

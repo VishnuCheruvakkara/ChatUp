@@ -15,13 +15,11 @@ const ChatBody = ({ messages }) => {
   }, [messages]);
 
   return (
-    <div className="flex-1 overflow-y-auto p-4 space-y-2 max-h-[calc(100vh-140px)] bg-bgBase">
+    <div className="flex-1 overflow-y-auto sm:p-4 px-1 py-3 space-y-2 max-h-[calc(100vh-140px)] bg-bgBase">
       {messages.map((msg, idx) => {
         const firstLetter = msg.user?.charAt(0).toUpperCase() || "?";
 
         const isMe = (msg.userId === currentUserId);
-        console.log("alll::::", messages)
-
 
         return (
           <div
