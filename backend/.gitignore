@@ -1,2 +1,42 @@
-.env
+# Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment folder
 env/
+venv/
+ENV/
+VENV/
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+
+# Ignore migrations except in specific cases (optional)
+# You might want to commit migrations, but sometimes people ignore them:
+# **/migrations/*.py
+# **/migrations/*.pyc
+# !**/migrations/__init__.py
+
+# Environment variables file
+.env
+.env.*
+
+# Database files (if using SQLite)
+db.sqlite3
+
+# Static and media files (optional, depending on your workflow)
+staticfiles/
+media/
+
+# IDE/editor specific files
+.vscode/
+.idea/
+*.swp
+
+# Django secret key or config files that should stay private
+settings_local.py

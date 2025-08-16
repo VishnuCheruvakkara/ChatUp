@@ -1,3 +1,67 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.message-tail-right {
+    position: relative;
+}
+
+.message-tail-right::before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 14px 14px 0 0;
+    border-color: #56DFCF transparent transparent transparent;
+    top: 0;
+    right: -13px;
+
+}
+
+.message-tail-left {
+    position: relative;
+}
+
+.message-tail-left::before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 14px 0 0 14px;
+    border-color: #adeed9 transparent transparent transparent;
+    top: 0;
+    left: -13px;
+
+}
+
+/* Global custom scrollbar */
+* {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #0ABAB5 transparent; /* thumb | track */
+}
+
+/* Chrome, Edge, Safari */
+*::-webkit-scrollbar {
+  width: 6px; /* thin */
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #0ABAB5;
+  border-radius: 0; /* square edges */
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #0ABAB5;
+}
+
+/* Global text selection style */
+::selection {
+  background-color: #0ABAB5; /* color when user selects/copies text */
+  color: #FFEDF3;            /* text color during selection */
+}

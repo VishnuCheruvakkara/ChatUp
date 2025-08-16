@@ -1,19 +1,23 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { BrowserRouter } from 'react-router-dom'
+import RouteConfig from './routes/RouteConfig'
+import { ToastProvider } from './components/Toast'
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+import NavigationWrapper from './components/Navigation';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-
-    <>
-      <div className="bg-red-700 h-full ">
-
-        <h1 className="font-semibold text-white text-center " >Hello world</h1>
-      </div>
-
-    </>
+    <Provider store={store}>
+      <BrowserRouter>
+        <NavigationWrapper>
+          <ToastProvider>
+            <RouteConfig />
+          </ToastProvider>
+        </NavigationWrapper>
+      </BrowserRouter>
+    </Provider>
   )
 }
 

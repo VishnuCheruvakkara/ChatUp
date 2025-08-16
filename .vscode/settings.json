@@ -1,3 +1,10 @@
 {
-    "python-envs.pythonProjects": []
+  "python.pythonPath": "C:\\Users\\Lenovo\\OneDrive\\Desktop\\python_1\\DJango\\ChatUp\\backend\\env\\Scripts\\python.exe",
+  "python.analysis.extraPaths": [
+    "C:\\Users\\Lenovo\\OneDrive\\Desktop\\python_1\\DJango\\ChatUp\\backend\\env\\Lib\\site-packages"
+  ],
+  "python.analysis.autoSearchPaths": true,
+  "python.analysis.useLibraryCodeForTypes": true,
+  "python-envs.defaultEnvManager": "ms-python.python:system",
+  "python-envs.pythonProjects": []
 }
