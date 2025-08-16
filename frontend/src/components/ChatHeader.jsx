@@ -60,3 +60,4 @@ const ChatHeader = ({ chatRoom, onRoomDetailsClick, onlineUsers}) => {
 };
 
 export default ChatHeader;
+
