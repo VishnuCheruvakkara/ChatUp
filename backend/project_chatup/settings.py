@@ -92,11 +92,13 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'project_chatup.urls'
 AUTH_USER_MODEL =  'users.User'
 
+REDIS_URL = env('REDIS_URL')
+
 CHANNEL_LAYERS = {
     "default":{
         "BACKEND":"channels_redis.core.RedisChannelLayer",
         "CONFIG":{
-            "hosts": [("127.0.0.1",6379)],
+            "hosts": [REDIS_URL],
         }
     }
 }

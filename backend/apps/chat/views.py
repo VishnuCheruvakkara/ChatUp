@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from chat.serializers import ChatRoomSerializer
+from chat.serializers import ChatRoomSerializer,ChatSerializer
 from rest_framework import status
 from chat.models import ChatRoom
 from rest_framework.pagination import PageNumberPagination
@@ -51,4 +51,10 @@ class GetSingleChatRoom(APIView):
         serializer = ChatRoomSerializer(room)
         return Response(serializer.data,status=status.HTTP_200_OK)
 
+class GetChatMessages(APIView):
+    def get(self, request, room_id):
+        room = get_object_or_404(ChatRoom,id=room_id)
+        chats = room.chats.select_related('user').all()
+        serializer = ChatSerializer(chats, many=True)
+        return Response(serializer.data)
 

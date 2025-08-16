@@ -3,7 +3,7 @@ import Button from "./Button";
 import { TbDoorExit } from "react-icons/tb";
 import { IoIosInformationCircle } from "react-icons/io";
 
-const ChatHeader = ({ chatRoom }) => {
+const ChatHeader = ({ chatRoom, onRoomDetailsClick, onlineUsers}) => {
   const navigate = useNavigate();
   const firstLetter = chatRoom?.name?.charAt(0).toUpperCase() || "G";
 
@@ -20,13 +20,14 @@ const ChatHeader = ({ chatRoom }) => {
           <h1 className="sm:text-xl text-sm font-bold truncate max-w-24 sm:max-w-full">
             {chatRoom?.name || "Group Chat"}
           </h1>
-          <span className="text-xs opacity-80 text-white font-semibold"> 8 online</span>
+          <span className="text-xs opacity-80 text-white font-semibold"> {onlineUsers || "0"} online</span>
         </div>
       </div>
 
       <div className="flex gap-2">
         <Button
           icon={IoIosInformationCircle}
+          onClick={onRoomDetailsClick}
           className="bg-bgBase text-primary text-xs sm:flex hidden"
         >
           Room Details
@@ -39,7 +40,7 @@ const ChatHeader = ({ chatRoom }) => {
           Leave Room
         </Button>
         <span
-          onClick={() => navigate(-1)}
+          onClick={onRoomDetailsClick}
           className="w-8 h-8  items-center justify-center bg-bgBase rounded-full cursor-pointer hover:bg-accent transition sm:hidden flex"
         >
           <IoIosInformationCircle className="text-primary text-2xl" />

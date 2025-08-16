@@ -35,7 +35,7 @@ function useChatSocket(roomName,onMessage){
             socket.close();
         };
 
-    },[roomName,onMessage]);
+    },[roomName]);
 
     const sendMessage = useCallback((message) => {
         if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN){

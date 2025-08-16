@@ -10,13 +10,13 @@ class ChatRoomSerializer(serializers.ModelSerializer):
     class Meta:
         model=ChatRoom
         fields = ['id','name','description','created_at','creator_name','creator_id']
-
     
 class ChatSerializer(serializers.ModelSerializer):
-    creator_id = serializers.IntegerField(source="user.id",read_only=True)
-    username = serializers.CharField(source="user.username",read_only=True)
+    user = serializers.CharField(source='user.username')
+    userId = serializers.IntegerField(source='user.id')
+    text = serializers.CharField(source='message')
+    time = serializers.DateTimeField(source= 'timestamp')
 
     class Meta:
-        model = Chat 
-        fields = ["id","user_id","user"]
-
+        model = Chat
+        fields = ['user', 'text', 'userId', 'time']
