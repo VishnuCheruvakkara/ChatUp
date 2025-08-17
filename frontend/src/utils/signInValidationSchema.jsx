@@ -1,4 +1,4 @@
-import * as Yup from "Yup";
+import * as Yup from "yup";
 
 const signInValidationSchema = Yup.object({
     email:Yup.string().email("Invalid email format").required("Email is required"),
