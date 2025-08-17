@@ -13,7 +13,7 @@ const SearchBar = ({
 }) => {
   const wrapperClasses = "relative w-full";
   const baseInputClasses =
-    "w-full pl-12 font-semibold text-gray-600 pr-12 py-2  rounded-full bg-bgBase border border-primary focus:outline-none  focus:ring-accent";
+    "w-full pl-12 font-semibold text-gray-600 pr-12 py-2  rounded-full bg-bgBase border border-primary focus:outline-none  focus:ring-accent shadow-lg";
 
   return (
     <div className={twMerge(clsx(wrapperClasses, className))}>

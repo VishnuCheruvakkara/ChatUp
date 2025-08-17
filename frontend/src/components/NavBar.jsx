@@ -35,7 +35,7 @@ function NavBar() {
     return (
         <>
             {loading && <PageLoader />}
-            <header className="w-full py-4 sm:px-8 px-3  flex justify-between items-center border-b border-primary bg-bgBase sticky top-0 z-40">
+            <header className="w-full py-4 sm:px-8 px-3  flex justify-between items-center border-b border-primary bg-bgBase shadow-lg sticky top-0 z-40">
                 <div onClick={() => navigate('/')} className="flex items-center gap-2 text-primary cursor-pointer ">
                     <div className="bg-primary text-white p-2 rounded-full">
                         <IoChatbubbleEllipsesSharp className="text-xl" />
