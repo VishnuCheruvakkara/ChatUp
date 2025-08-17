@@ -1,5 +1,5 @@
 # ChatUp
-ChatUp is a full-stack chat and video communication application developed as part of a machine test. It uses Django for the backend, React for the frontend, and WebSockets/WebRTC for real-time communication.
+ChatUp is a full-stack chat communication application developed as part of a machine test. It uses Django for the backend, React for the frontend, and WebSockets for real-time communication.
 
 ## Table of Contents
 - Features
@@ -40,12 +40,19 @@ ChatUp is a full-stack chat and video communication application developed as par
 ## Installation and Setup
 1. Clone the repository
    
-### Backend (Django) Setup
-
   ```
   git clone <your-repo-url>
-  cd <your-repo-folder>/backend
   ```
+   
+### Backend (Django) Setup
+
+1. Create and activate a virtual environment
+   
+  ```
+  cd backend
+  ```
+   
+
  
 
 ## Testing
