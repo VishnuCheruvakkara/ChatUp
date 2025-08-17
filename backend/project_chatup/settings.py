@@ -125,7 +125,7 @@ ASGI_APPLICATION = 'project_chatup.asgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    "default": env.db("DATABASE_URL")
+    "default": env.db("DATABASE_URL"),
 }
 
 # Password validation
