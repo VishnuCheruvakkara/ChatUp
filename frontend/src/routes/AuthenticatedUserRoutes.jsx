@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
-import UserDashboardLayout from '../layout/userDashboardLayout'
+import UserDashboardLayout from '../layout/UserDashboardLayout'
 // import pages 
 import RoomPage from '../pages/RoomListPage'
 import CreateRoom from '../pages/CreateRoom'
