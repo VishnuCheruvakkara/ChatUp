@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "./Button"
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import publicAxios from "../axios/publicAxios";
+import publicAxios from "../axios/PublicAxios";
 import PageLoader from "./PageLoader";
 import { clearUser } from "../redux/userSlice";
 import { useDispatch, useSelector } from "react-redux";

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { registerGlobalNavigate } from "../services/navigationService";
+import { registerGlobalNavigate } from "../services/NavigationService";
 
 function NavigationWrapper({children}){
     const navigate = useNavigate();

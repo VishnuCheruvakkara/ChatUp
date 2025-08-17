@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { showGlobalToast } from '../services/ToastService';
-import { navigateTo } from '../services/navigationService';
+import { navigateTo } from '../services/NavigationService';
 
 let isSessionExpiredHandle = false;
 const userAxios = axios.create({
