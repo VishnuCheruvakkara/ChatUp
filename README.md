@@ -41,7 +41,9 @@ ChatUp is a full-stack chat communication application developed as part of a mac
 1. Clone the repository
    
   ```
-  git clone <your-repo-url>
+  git clone https://github.com/VishnuCheruvakkara/ChatUp.git
+
+  cd ChatUp
   ```
    
 ### Backend (Django) Setup
@@ -51,6 +53,27 @@ ChatUp is a full-stack chat communication application developed as part of a mac
   ```
   cd backend
   ```
+2. Create and activate a virtual environment
+   
+  ```
+  python -m venv env
+  ```
+  > activate env on Windows
+  ```
+  env\Scripts\activate
+  ```
+
+  > activate env macOS/Linux
+  
+  ```
+  source env/bin/activate
+  ```
+  
+  
+
+
+
+   
    
 
  
