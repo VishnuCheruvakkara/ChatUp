@@ -2,7 +2,7 @@
 ChatUp is a full-stack chat communication application developed as part of a machine test. It uses Django for the backend, React for the frontend, and WebSockets for real-time communication.
 
 <p align="center">
-  <img src="./assets/agri_flow_landing_page.jpg" alt="AgriFlow Logo" width="100%" style="border-radius: 16px;" />
+  <img src="./assets/agri_flow_landing_page.jpg" alt="ChatUp home page" width="100%" style="border-radius: 16px;" />
 </p>
 
 <p align="center">
