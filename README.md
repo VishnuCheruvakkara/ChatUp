@@ -14,10 +14,11 @@ ChatUp is a full-stack chat communication application developed as part of a mac
     <img alt="Watch Demo Video" src="https://img.shields.io/badge/Demo%20Video-FF0000?style=for-the-badge&logo=youtube&logoColor=white" />
   </a>
   &nbsp;
-  <a href="https://www.linkedin.com/in/YOUR_PROFILE_ID" target="_blank">
-    <img alt="Connect on LinkedIn" src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" />
+  <a href="https://www.linkedin.com/" target="_blank">
+    <img alt="Connect on LinkedIn" src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=logmein&logoColor=white" />
   </a>
 </p>
+
 
 
 ## Table of Contents
