@@ -88,16 +88,81 @@ ChatUp is a full-stack chat communication application developed as part of a mac
   ```
   source env/bin/activate
   ```
-  
-  
 
+3. Install dependencies
+   ```
+   pip install -r requirements.txt
+   ```
 
+4. Install Redis (required for WebSocket communication)
+   - Windows:
+     
+     On Windows, you can use Memurai (a lightweight Redis alternative), Redis for Windows from the      GitHub archive (older but works), or WSL (Windows Subsystem for Linux) to run the native           Linux version inside Windows.
+    
+     
+   - macOS:
+     ```
+     brew install redis
+     brew services start redis
+     ```
+   - Linux (Ubuntu/Debian):
+     ```
+     sudo apt update
+     sudo apt install redis-server
+     sudo systemctl enable redis-server
+     sudo systemctl start redis-server
+     ```
+     
+   Verify installation by running:
+   ```
+   redis-cli ping
+   ```
+   Note : After running the above command you will get a reponse as : PONG
+
+5. Apply database migrations
+   
+   ```
+   python manage.py migrate
+   ```
+   
+6. Create a superuser (for admin access)
+   ```
+   python manage.py createsuperuser
+   ```
+
+7. Run the development server
+     You can use either Daphne or Uvicorn:
+
+      - Run with Daphne:
+          ```
+          daphne project_chatup.asgi:application
+          ```
+      - Run with Uvicorn:
+          ```
+          uvicorn project_chatup.asgi:application --reload
+          ```
+
+    Backend will now be running at: http://127.0.0.1:8000/
 
    
+### Frontend (React) Setup
+
+  1. Navigate to the frontend folder:
+     
+      ```
+      cd frontend
+      ```
+  2. Install dependencies:
+      ```
+      npm install
+      ```
+  3. Start the Vite development server:
+      ```
+      npm run dev
+      ```
+
+  The frontend will now be running at: http://localhost:5173/ (default Vite port).
    
-
- 
-
 ## Testing
 - Backend unit tests: `python manage.py test`  
 - Frontend tests: `npm test`  
