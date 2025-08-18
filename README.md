@@ -94,7 +94,13 @@ ChatUp is a full-stack chat communication application developed as part of a mac
    pip install -r requirements.txt
    ```
 
-4. Install Redis (required for WebSocket communication)
+4. Configure environment variables
+       
+  - Create a new `.env` file in the backend folder.  
+  - Copy the contents of `.env.example` into `.env`.  
+  - Update the placeholder values with your actual local configuration (e.g., `SECRET_KEY`, `DEBUG`, `DATABASE_URL`, `REDIS_URL`, etc.).
+
+5. Install Redis (required for WebSocket communication)
    - Windows:
      
      On Windows, you can use Memurai (a lightweight Redis alternative), Redis for Windows from the      GitHub archive (older but works), or WSL (Windows Subsystem for Linux) to run the native           Linux version inside Windows.
@@ -119,18 +125,18 @@ ChatUp is a full-stack chat communication application developed as part of a mac
    ```
    Note : After running the above command you will get a reponse as : PONG
 
-5. Apply database migrations
+6. Apply database migrations
    
    ```
    python manage.py migrate
    ```
    
-6. Create a superuser (for admin access)
+7. Create a superuser (for admin access)
    ```
    python manage.py createsuperuser
    ```
 
-7. Run the development server
+8. Run the development server
      You can use either Daphne or Uvicorn:
 
       - Run with Daphne:
@@ -156,7 +162,13 @@ ChatUp is a full-stack chat communication application developed as part of a mac
       ```
       npm install
       ```
-  3. Start the Vite development server:
+      
+  3. Configure environment variables:
+      - Create a new `.env` file in the frontend folder.  
+      - Copy the contents of `.env.example` into `.env`.  
+      - Update values (e.g., `VITE_API_BASE_URL`, `VITE_WS_URL`) according to your local backend           setup.  
+
+  4. Start the Vite development server:
       ```
       npm run dev
       ```
@@ -168,6 +180,9 @@ ChatUp is a full-stack chat communication application developed as part of a mac
 - Frontend tests: `npm test`  
 
 ## Contributing
+Note : This project was developed as part of a machine test.  
+Contributions are not required, but if you’d like to suggest improvements, feel free to open an issue or pull request.
+
 - Fork the repository  
 - Create a new branch  
 - Commit changes  
