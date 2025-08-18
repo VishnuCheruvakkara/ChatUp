@@ -7,13 +7,18 @@ ChatUp is a full-stack chat communication application developed as part of a mac
 
 <p align="center">
   <a href="https://chat-up-brown.vercel.app/" target="_blank">
-    <img alt="View Live Project" src="https://img.shields.io/badge/%20Live%20Demo-0abab5?style=for-the-badge&logo=vercel&logoColor=white" />
+    <img alt="View Live Project" src="https://img.shields.io/badge/Live%20Demo-0abab5?style=for-the-badge&logo=vercel&logoColor=white" />
   </a>
   &nbsp;
   <a href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID" target="_blank">
-    <img alt="Watch Demo Video" src="https://img.shields.io/badge/%20Demo%20Video-FF0000?style=for-the-badge&logo=youtube&logoColor=white" />
+    <img alt="Watch Demo Video" src="https://img.shields.io/badge/Demo%20Video-FF0000?style=for-the-badge&logo=youtube&logoColor=white" />
+  </a>
+  &nbsp;
+  <a href="https://www.linkedin.com/in/YOUR_PROFILE_ID" target="_blank">
+    <img alt="Connect on LinkedIn" src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" />
   </a>
 </p>
+
 
 ## Table of Contents
 - Features
