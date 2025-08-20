@@ -1,4 +1,4 @@
-import * as Yup from "Yup";
+import * as Yup from "yup";
 
 const signUpValidationSchema = Yup.object({
     username: Yup.string().matches(/^(?=.*[A-Za-z])[A-Za-z0-9_]+$/, 'Username must include letters, numbers, and can contain underscore').required('Name is required'),

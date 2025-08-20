@@ -2,6 +2,7 @@ import { MdOutlineCancel } from "react-icons/md";
 import DateTimeFormatter from "./DateTimeFormatter";
 
 const ChatSidebar = ({ isOpen, onClose, chatRoom, onlineUsers }) => {
+
     return (
         <>
             {/* Overlay */}
@@ -39,14 +40,18 @@ const ChatSidebar = ({ isOpen, onClose, chatRoom, onlineUsers }) => {
                     </div>
 
                     <ul className="space-y-2 text-sm text-gray-500">
-                        {onlineUsers.map((user) => (
-                            <li key={user.id} className="flex items-center gap-5 border p-2 border-accent rounded-md font-semibold">
-                                <div className="w-6 h-6 rounded-full bg-accent flex items-center justify-center">
-                                    <span className="text-bgBase">{user.username[0]}</span>
-                                </div>
-                                {user.username}
-                            </li>
-                        ))}
+                        {onlineUsers.map((user) => {
+                             const firstLetter = user.username?.charAt(0).toUpperCase() || "U";
+                            return(
+                                <li key={user.id} className="flex items-center gap-5 border p-2 border-accent rounded-md font-semibold">
+                                    <div className="w-6 h-6 rounded-full bg-accent flex items-center justify-center">
+                                        <span className="text-bgBase">{firstLetter}</span>
+                                    </div>
+                                    {user.username}
+                                </li>
+                            )
+                        })}
+
                     </ul>
                 </div>
 

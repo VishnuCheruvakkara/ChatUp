@@ -18,9 +18,9 @@ function userDashboardLayout() {
                 {/* Buttons */}
                 <div className="flex flex-col sm:flex-row justify-center gap-4 mb-6 w-full max-w-5xl border-b border-primary pb-5">
 
-                    <Button onClick={()=>navigate("/user/dashboard/create-room")} icon={FiPlusCircle} className={`border border-primary bg-bgBase text-primary px-5 py-2 rounded-full transition font-semibold flex items-center gap-2  ${isActive("/user/dashboard/create-room")? "bg-primary hover:bg-primary text-bgBase":"bg-bgBase hover:bg-bgLight" }`}>Create Room</Button>
-                    <Button onClick={()=>navigate("/user/dashboard/my-rooms")} icon={FiGrid} className={`border border-primary bg-bgBase text-primary px-5 py-2 rounded-full transition font-semibold flex items-center gap-2  ${isActive("/user/dashboard/my-rooms")? "bg-primary hover:bg-primary text-bgBase":"bg-bgBase hover:bg-bgLight" }`}>My Rooms</Button>
-                    <Button onClick={()=>navigate("/user/dashboard/all-rooms")} icon={FiCompass} className={`border border-primary bg-bgBase text-primary px-5 py-2 rounded-full transition font-semibold flex items-center gap-2  ${isActive("/user/dashboard/all-rooms")? "bg-primary hover:bg-primary text-bgBase":"bg-bgBase hover:bg-bgLight" }`}>Explore</Button>
+                    <Button onClick={()=>navigate("/user/dashboard/create-room")} icon={FiPlusCircle} className={`border border-primary bg-bgBase text-primary px-5 py-2 rounded-full transition font-semibold flex items-center gap-2 shadow-lg ${isActive("/user/dashboard/create-room")? "bg-primary hover:bg-primary text-bgBase":"bg-bgBase hover:bg-bgLight" }`}>Create Room</Button>
+                    <Button onClick={()=>navigate("/user/dashboard/my-rooms")} icon={FiGrid} className={`border border-primary bg-bgBase text-primary px-5 py-2 rounded-full transition font-semibold flex items-center gap-2 shadow-lg ${isActive("/user/dashboard/my-rooms")? "bg-primary hover:bg-primary text-bgBase":"bg-bgBase hover:bg-bgLight" }`}>My Rooms</Button>
+                    <Button onClick={()=>navigate("/user/dashboard/all-rooms")} icon={FiCompass} className={`border border-primary bg-bgBase text-primary px-5 py-2 rounded-full transition font-semibold flex items-center gap-2 shadow-lg ${isActive("/user/dashboard/all-rooms")? "bg-primary hover:bg-primary text-bgBase":"bg-bgBase hover:bg-bgLight" }`}>Explore</Button>
 
                 </div>
 

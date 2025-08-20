@@ -18,8 +18,8 @@ class RegisterAccount(APIView):
         serializer = RegisterAccountSerializer(data=request.data)
         if serializer.is_valid():
             user=serializer.save()
-
-            response = Response({"message":"User registered successfully"},status=status.HTTP_201_CREATED)
+            user_data = UserSerializer(user).data
+            response = Response({"message":"User registered successfully","user":user_data},status=status.HTTP_201_CREATED)
             # Call function from utils.py
             return set_jwt_cookies(response, user)
         
@@ -34,6 +34,7 @@ class LoginAccount(APIView):
             user = serializer.validated_data["user"]
             user_data = UserSerializer(user).data
             response = Response({"message":"Login successfull","user":user_data},status=status.HTTP_200_OK)
+            # Call function from utils.py
             return set_jwt_cookies(response, user)
         else:
             return Response(serializer.errors,status = status.HTTP_401_UNAUTHORIZED)

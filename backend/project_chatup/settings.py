@@ -125,14 +125,7 @@ ASGI_APPLICATION = 'project_chatup.asgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
-        'HOST': env('DB_HOST'),
-        'PORT': env('DB_PORT'),
-    }
+    "default": env.db("DATABASE_URL"),
 }
 
 # Password validation

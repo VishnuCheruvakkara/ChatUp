@@ -3,7 +3,7 @@ import { Formik, Form } from "formik";
 import InputField from "../components/InputField";
 import signUpValidationSchema from "../utils/signUpValidationSchemas";
 import Button from "../components/Button";
-import publicAxios from "../axios/publicAxios";
+import publicAxios from "../axios/PublicAxios";
 import { useNavigate } from "react-router-dom";
 import PageLoader from "../components/PageLoader";
 import { useToast } from '../components/Toast';
