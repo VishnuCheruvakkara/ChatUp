@@ -10,6 +10,6 @@ urlpatterns = [
     # After authentication
     path('get-user-profile/',GetUserProfile.as_view(),name="get_user_profile"),
   
-    # Refresh token view 
+    # Refresh token view
     path('token/refresh/',RefreshTokenView.as_view(),name="token_refresh_cookie"),
 ]

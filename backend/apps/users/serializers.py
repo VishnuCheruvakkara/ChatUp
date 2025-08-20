@@ -9,7 +9,7 @@ User = get_user_model()
 class RegisterAccountSerializer(serializers.ModelSerializer):
     username = serializers.CharField(max_length=150,validators=[RegexValidator(regex=r'^(?=.*[A-Za-z])[A-Za-z0-9_]+$',message='Username is not valid',code='invalid_username')])
     email = serializers.EmailField(required=True)
-    password = serializers.CharField(write_only=True,validators=[validate_password])
+    password = serializers.CharField(write_only=True,validators=[validate_password,RegexValidator(regex=r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',message='Password must be at least 8 characters long and contain one uppercase, one lowercase, one number, and one special character.')])
 
     class Meta:
         model = User 
