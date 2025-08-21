@@ -8,7 +8,7 @@ REDIS_URL = settings.REDIS_URL
 
 class ChatRoomConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        self.user = self.scope.get("user")  # <- important!
+        self.user = self.scope.get("user")  
         if not self.user or not self.user.is_authenticated:
             await self.close()
             return
