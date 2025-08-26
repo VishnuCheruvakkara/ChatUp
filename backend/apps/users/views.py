@@ -10,10 +10,13 @@ from django.conf import settings
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
 logger = logging.getLogger(__name__)
+from .swagger_schemas import register_schema, login_schema, logout_schema, profile_schema, refresh_schema
+
 
 class RegisterAccount(APIView):
     permission_classes = [AllowAny]
 
+    @register_schema
     def post(self,request):
         serializer = RegisterAccountSerializer(data=request.data)
         if serializer.is_valid():
@@ -28,6 +31,7 @@ class RegisterAccount(APIView):
 class LoginAccount(APIView):
     permission_classes=[AllowAny]
 
+    @login_schema
     def post(self, request):
         serializer = LoginAccountSerializer(data=request.data)
         if serializer.is_valid():
@@ -42,11 +46,14 @@ class LoginAccount(APIView):
 class LogoutAccount(APIView):
     permission_classes=[AllowAny]
 
+    @logout_schema
     def post(self,request):
         response = Response({"message":"Logout successful."},status=status.HTTP_200_OK)    
         return clear_jwt_cookies(response,request)
     
 class GetUserProfile(APIView):
+
+    @profile_schema
     def get(self,request):
         user = request.user 
         serializer = UserSerializer(user)
@@ -56,6 +63,7 @@ class RefreshTokenView(APIView):
     """ Generate new access token with refresh token if access token is expired."""
     permission_classes = [AllowAny]
 
+    @refresh_schema
     def post(self,request):
         refresh_token = request.COOKIES.get(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'])
 

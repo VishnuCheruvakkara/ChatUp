@@ -44,10 +44,12 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
     'channels',
+    'drf_spectacular',
 ]
 
 
 REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'apps.users.authentication.JWTCookieAuthentication',
     ),
@@ -183,5 +185,50 @@ LOGGING = {
     'root': {
         'handlers': ['console'],
         'level': 'DEBUG',
+    },
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'ChatUp',
+    'DESCRIPTION': """
+# ChatUp REST API (Backend)
+
+**ChatUp** is a real-time chat application backend. This API allows users to register, login, create chat rooms, and send messages securely using JWT authentication.
+
+## Key Features
+- **User Authentication:** Register, login, logout, and get profile info.
+- **Chat Rooms:** Create, list, search, and delete chat rooms.
+- **Messages:** Send and retrieve messages in chat rooms.
+- **Pagination & Filtering:** Supports pagination and search on chat rooms.
+
+## Authentication
+- JWT access and refresh tokens are used.
+- Use the **Authorize** button in Swagger UI to access protected endpoints.
+
+## Real-Time Chat (WebSocket)
+- **Connect:** `ws://localhost:8000/ws/chat-room/<room_name>/`
+- **Authentication:** User must be logged in (JWT or session cookie)
+- **Events:**
+  - `message`: Send a message  
+    **Payload:** `{ "message": "<text>" }`
+  - `user_list`: Receive current online users
+- **Notes:** Messages are broadcast to all users in the room. Online users are tracked in Redis.
+
+## Developer Info
+- GitHub: [https://github.com/VishnuCheruvakkara](https://github.com/VishnuCheruvakkara)  
+- LinkedIn: [https://www.linkedin.com/in/vishnu-cheruvakkara-231b8b235/](https://www.linkedin.com/in/vishnu-cheruvakkara-231b8b235/)  
+- Instagram: [https://www.instagram.com/vishnu_c_dev/](https://www.instagram.com/vishnu_c_dev/)  
+
+**API Version:** v1.0.0  
+All responses are in JSON format.
+""",
+    'VERSION': '1.0.0',
+    'CONTACT': {
+        "name": "Author",
+        "email": "vishnucheruvakkaraofficial@gmail.com",
+    },
+    'LICENSE': {
+        "name": "MIT License",
+        "url": "https://opensource.org/licenses/MIT"
     },
 }

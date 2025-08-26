@@ -19,16 +19,19 @@ def get_user_from_token(token):
 class JWTAuthMiddleware(BaseMiddleware):
     async def __call__(self, scope,receive, send):
         headers = dict(scope["headers"])
+        logger.info(f"WebSocket headers: {headers}")
 
         cookies = {}
         if b"cookie" in headers:
-            cookie_str = headers[b"cookie"].decode() 
+            cookie_str = headers[b"cookie"].decode()
             for pair in cookie_str.split(";"):
                 name, value = pair.strip().split("=",1)
                 cookies[name] = value 
 
         token = cookies.get("access_token") 
-
         scope["user"] = await get_user_from_token(token) if token else None 
+        logger.info(f"User from token: {scope['user']}")
 
         return await super().__call__(scope, receive, send)
+
+    
