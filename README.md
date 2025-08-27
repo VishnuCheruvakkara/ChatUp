@@ -176,8 +176,24 @@ ChatUp is a full-stack chat communication application. It uses Django for the ba
   The frontend will now be running at: http://localhost:5173/ (default Vite port).
    
 ## Testing
-- Backend unit tests: `python manage.py test`  
-- Frontend tests: `npm test`  
+
+### Test Backend
+
+- Run **all tests**:  
+  `pytest -v`
+  
+- Run only **unit tests**:
+ 
+  `pytest .\apps\users\test`
+  
+  `pytest .\apps\chat\test`
+  
+- Run only **integration tests**:
+  `pytest integration_test`
+  
+### Test Frontend
+
+- Frontend tests: `npm run test`  
 
 ## Contributing
 Note : This project was developed as part of a machine test.  
