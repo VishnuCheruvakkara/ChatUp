@@ -1,0 +1,537 @@
+openapi: 3.0.3
+info:
+  title: ChatUp
+  version: 1.0.0
+  description: "\n# ChatUp REST API (Backend)\n\n**ChatUp** is a real-time chat application\
+    \ backend. This API allows users to register, login, create chat rooms, and send\
+    \ messages securely using JWT authentication.\n\n## Key Features\n- **User Authentication:**\
+    \ Register, login, logout, and get profile info.\n- **Chat Rooms:** Create, list,\
+    \ search, and delete chat rooms.\n- **Messages:** Send and retrieve messages in\
+    \ chat rooms.\n- **Pagination & Filtering:** Supports pagination and search on\
+    \ chat rooms.\n\n## Authentication\n- JWT access and refresh tokens are used.\n\
+    - Use the **Authorize** button in Swagger UI to access protected endpoints.\n\n\
+    ## Real-Time Chat (WebSocket)\n- **Connect:** `ws://localhost:8000/ws/chat-room/<room_name>/`\n\
+    - **Authentication:** User must be logged in (JWT or session cookie)\n- **Events:**\n\
+    \  - `message`: Send a message  \n    **Payload:** `{ \"message\": \"<text>\"\
+    \ }`\n  - `user_list`: Receive current online users\n- **Notes:** Messages are\
+    \ broadcast to all users in the room. Online users are tracked in Redis.\n\n##\
+    \ Developer Info\n- GitHub: [https://github.com/VishnuCheruvakkara](https://github.com/VishnuCheruvakkara)\
+    \  \n- LinkedIn: [https://www.linkedin.com/in/vishnu-cheruvakkara-231b8b235/](https://www.linkedin.com/in/vishnu-cheruvakkara-231b8b235/)\
+    \  \n- Instagram: [https://www.instagram.com/vishnu_c_dev/](https://www.instagram.com/vishnu_c_dev/)\
+    \  \n\n**API Version:** v1.0.0  \nAll responses are in JSON format.\n"
+  contact:
+    name: Author
+    email: vishnucheruvakkaraofficial@gmail.com
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+paths:
+  /api/schema/:
+    get:
+      operationId: api_schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - ug
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - api
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /chat/create-chat-room/:
+    post:
+      operationId: chat_create_chat_room_create
+      description: Create a new chat room. The logged-in user is automatically set
+        as the creator.
+      summary: Create a new chat room
+      tags:
+      - Chat Rooms
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatRoom'
+            examples:
+              ExampleRequest:
+                value:
+                  name: General
+                  description: General discussion room
+                summary: Example Request
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ChatRoom'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ChatRoom'
+        required: true
+      responses:
+        '201':
+          description: No response body
+        '400':
+          description: No response body
+  /chat/delete-room/{room_id}/:
+    post:
+      operationId: chat_delete_room_create
+      description: Marks the chat room as deleted. Only the creator can delete it.
+      summary: Delete a chat room
+      parameters:
+      - in: path
+        name: room_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Chat Rooms
+      responses:
+        '200':
+          description: No response body
+        '404':
+          description: No response body
+  /chat/get-all-rooms/:
+    get:
+      operationId: chat_get_all_rooms_list
+      description: |2
+
+        Retrieve all chat rooms. Use query params:
+        - `mine=true` to get rooms created by current user
+        - `search=<text>` to search by name, description, or creator's username
+      summary: Get all chat rooms
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - Chat Rooms
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedChatRoomList'
+          description: ''
+  /chat/get-chat-messages/{room_id}/:
+    get:
+      operationId: chat_get_chat_messages_list
+      description: Retrieve all messages in a specific chat room by room ID.
+      summary: Get all messages in a chat room
+      parameters:
+      - in: path
+        name: room_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Chats
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Chat'
+          description: ''
+        '404':
+          description: No response body
+  /chat/get-chat-room/{room_id}:
+    get:
+      operationId: chat_get_chat_room_retrieve
+      description: Retrieve details of a specific chat room by ID.
+      summary: Get single chat room details
+      parameters:
+      - in: path
+        name: room_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Chat Rooms
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatRoom'
+          description: ''
+        '404':
+          description: No response body
+  /users/get-user-profile/:
+    get:
+      operationId: users_get_user_profile_retrieve
+      description: Retrieve the currently logged-in user's profile data.
+      summary: Get current user profile
+      tags:
+      - Users
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /users/login/:
+    post:
+      operationId: users_login_create
+      description: Login with email and password. JWT cookies are set on success.
+      summary: Login user
+      tags:
+      - Authentication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginAccount'
+            examples:
+              ExampleLogin:
+                value:
+                  email: user@example.com
+                  password: strongpassword123
+                summary: Example Login
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LoginAccount'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LoginAccount'
+        required: true
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+        '401':
+          description: No response body
+  /users/logout/:
+    post:
+      operationId: users_logout_create
+      description: Logs out the user and clears JWT cookies.
+      summary: Logout user
+      tags:
+      - Authentication
+      security:
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /users/register/:
+    post:
+      operationId: users_register_create
+      description: |2
+
+        Register a new user with email, username, and password.
+        On successful registration, JWT cookies (access & refresh) will be set in the response.
+      summary: Register a new user
+      tags:
+      - Authentication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterAccount'
+            examples:
+              ExampleRequest:
+                value:
+                  email: Sample@gmail.com
+                  username: UserSample
+                  password: StrongPassword@123
+                summary: Example Request
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RegisterAccount'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RegisterAccount'
+        required: true
+      security:
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+        '400':
+          description: No response body
+  /users/token/refresh/:
+    post:
+      operationId: users_token_refresh_create
+      description: |2
+
+        Generate a new access token using the refresh token stored in cookies.
+
+        Responses:
+            200: New access token established and set in cookie.
+            401: Session expired or refresh token missing/invalid.
+      summary: Refresh access token
+      tags:
+      - Authentication
+      security:
+      - {}
+      responses:
+        '200':
+          description: No response body
+        '401':
+          description: No response body
+components:
+  schemas:
+    Chat:
+      type: object
+      properties:
+        user:
+          type: string
+        text:
+          type: string
+        userId:
+          type: integer
+        time:
+          type: string
+          format: date-time
+      required:
+      - text
+      - time
+      - user
+      - userId
+    ChatRoom:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          pattern: ^(?=.*[A-Za-z])[A-Za-z0-9_ ]+$
+          maxLength: 25
+        description:
+          type: string
+          pattern: ^(?=.*[A-Za-z])[A-Za-z0-9_ ]+$
+          maxLength: 250
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        creator_name:
+          type: string
+          readOnly: true
+        creator_id:
+          type: string
+          readOnly: true
+      required:
+      - created_at
+      - creator_id
+      - creator_name
+      - description
+      - id
+      - name
+    LoginAccount:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          writeOnly: true
+      required:
+      - email
+      - password
+    PaginatedChatRoomList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChatRoom'
+    RegisterAccount:
+      type: object
+      properties:
+        username:
+          type: string
+          pattern: ^(?=.*[A-Za-z])[A-Za-z0-9_]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          writeOnly: true
+          pattern: ^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$
+      required:
+      - email
+      - password
+      - username
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          maxLength: 254
+      required:
+      - email
+      - id
+      - username
