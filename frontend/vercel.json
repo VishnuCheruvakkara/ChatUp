@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://chatup-1pkp.onrender.com/api/:path*"
+      "destination": "https://chatup-1pkp.onrender.com/:path*"
     },
     {
       "source": "/(.*)",
