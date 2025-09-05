@@ -72,8 +72,8 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
     'ROTATE_REFRESH_TOKENS': True,
     'AUTH_HEADER_TYPES': ('Bearer',),
-    'AUTH_COOKIE_ACCESS': 'access_token',         # Custom
-    'AUTH_COOKIE_REFRESH': 'refresh_token',       # Custom
+    'AUTH_COOKIE_ACCESS': 'access_token',       
+    'AUTH_COOKIE_REFRESH': 'refresh_token',     
     'AUTH_COOKIE_HTTP_ONLY': True,
     'AUTH_COOKIE_SECURE': True,          
     'AUTH_COOKIE_SAMESITE': 'None',
