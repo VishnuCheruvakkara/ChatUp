@@ -6,7 +6,7 @@ function useChatSocket(roomName,onMessage){
 
     useEffect(()=>{
         const socket = new WebSocket(
-            `${WS_BASE_URL}/chat-room/${roomName}/`
+            `${WS_BASE_URL}/ws/chat-room/${roomName}/`
         );
         socketRef.current = socket;
 
@@ -23,7 +23,7 @@ function useChatSocket(roomName,onMessage){
             }
         };
 
-
+        
         socket.onclose = (event) =>{
             console.log("WebSocket closed",event);
         };
