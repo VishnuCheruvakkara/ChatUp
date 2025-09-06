@@ -6,7 +6,7 @@
     },
     {
       "source": "/ws-api/(.*)",
-      "destination": "https://chatup-1pkp.onrender.com/$1"
+      "destination": "wss://chatup-1pkp.onrender.com/$1"
     },
     {
       "source": "/(.*)",
