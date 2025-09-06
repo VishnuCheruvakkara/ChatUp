@@ -5,7 +5,7 @@
       "destination": "https://chatup-1pkp.onrender.com/$1"
     },
     {
-      "source": "/api/chat-room/(.*)",
+      "source": "/ws-api/(.*)",
       "destination": "https://chatup-1pkp.onrender.com/$1"
     },
     {
