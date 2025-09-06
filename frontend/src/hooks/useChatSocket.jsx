@@ -23,6 +23,7 @@ function useChatSocket(roomName,onMessage){
             }
         };
 
+        
         socket.onclose = (event) =>{
             console.log("WebSocket closed",event);
         };
