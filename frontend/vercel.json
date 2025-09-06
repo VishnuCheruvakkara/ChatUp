@@ -5,7 +5,7 @@
       "destination": "https://chatup-1pkp.onrender.com/$1"
     },
     {
-      "source": "/ws/(.*)",
+      "source": "/(.*)",
       "destination": "wss://chatup-1pkp.onrender.com/$1"
     },
     {
