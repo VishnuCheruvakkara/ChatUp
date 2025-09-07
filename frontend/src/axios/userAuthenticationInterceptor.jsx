@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { showGlobalToast } from '../services/ToastService';
 import { navigateTo } from '../services/navigationService';
+import store from '../redux/store';
+import { clearUser } from '../redux/userSlice';
 
 let isSessionExpiredHandle = false;
 const userAxios = axios.create({
@@ -28,6 +30,7 @@ userAxios.interceptors.response.use(
                     isSessionExpiredHandle = true
                     console.error('Token refresh failed', refreshError);
                     showGlobalToast("Session expired. Please log in again.", "warning");
+                    store.dispatch(clearUser());
                     navigateTo('/');
                 }
                 return;
