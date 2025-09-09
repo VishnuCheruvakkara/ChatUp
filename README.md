@@ -10,7 +10,7 @@ ChatUp is a full-stack chat communication application. It uses Django for the ba
     <img alt="View Live Project" src="https://img.shields.io/badge/Live%20Demo-0abab5?style=for-the-badge&logo=vercel&logoColor=white" />
   </a>
   &nbsp;
-  <a href="https://youtube.com/@8.0learnuptoinfinity?si=AgmONeppEN5G0kPz" target="_blank">
+  <a href="https://youtu.be/gpeeS5kXEZY" target="_blank">
     <img alt="Watch Demo Video" src="https://img.shields.io/badge/Demo%20Video-FF0000?style=for-the-badge&logo=youtube&logoColor=white" />
   </a>
   &nbsp;
