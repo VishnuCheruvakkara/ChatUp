@@ -12,52 +12,67 @@ from rest_framework_simplejwt.exceptions import TokenError
 logger = logging.getLogger(__name__)
 from .swagger_schemas import register_schema, login_schema, logout_schema, profile_schema, refresh_schema
 
-
 class RegisterAccount(APIView):
     permission_classes = [AllowAny]
 
     @register_schema
     def post(self,request):
-        serializer = RegisterAccountSerializer(data=request.data)
-        if serializer.is_valid():
-            user=serializer.save()
-            user_data = UserSerializer(user).data
-            response = Response({"message":"User registered successfully","user":user_data},status=status.HTTP_201_CREATED)
-            # Call function from utils.py
-            return set_jwt_cookies(response, user)
+        try:
+            serializer = RegisterAccountSerializer(data=request.data)
+            if serializer.is_valid():
+                user=serializer.save()
+                user_data = UserSerializer(user).data
+                response = Response({"message":"User registered successfully","user":user_data},status=status.HTTP_201_CREATED)
+                # Call function from utils.py
+                return set_jwt_cookies(response, user)
+            
+            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            logger.exception(f"Error registering user: {e}")
+            return Response({"error": "Failed to register user"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-
 class LoginAccount(APIView):
     permission_classes=[AllowAny]
 
     @login_schema
     def post(self, request):
-        serializer = LoginAccountSerializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.validated_data["user"]
-            user_data = UserSerializer(user).data
-            response = Response({"message":"Login successfull","user":user_data},status=status.HTTP_200_OK)
-            # Call function from utils.py
-            return set_jwt_cookies(response, user)
-        else:
-            return Response(serializer.errors,status = status.HTTP_401_UNAUTHORIZED)
+        try:
+            serializer = LoginAccountSerializer(data=request.data)
+            if serializer.is_valid():
+                user = serializer.validated_data["user"]
+                user_data = UserSerializer(user).data
+                response = Response({"message":"Login successfull","user":user_data},status=status.HTTP_200_OK)
+                # Call function from utils.py
+                return set_jwt_cookies(response, user)
+            else:
+                return Response(serializer.errors,status = status.HTTP_401_UNAUTHORIZED)
+        except Exception as e:
+            logger.exception(f"Error during login: {e}")
+            return Response({"error": "Login failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class LogoutAccount(APIView):
     permission_classes=[AllowAny]
 
     @logout_schema
     def post(self,request):
-        response = Response({"message":"Logout successful."},status=status.HTTP_200_OK)    
-        return clear_jwt_cookies(response,request)
-    
+        try:
+            response = Response({"message":"Logout successful."},status=status.HTTP_200_OK)    
+            return clear_jwt_cookies(response,request)
+        except Exception as e:
+            logger.exception(f"Error during logout: {e}")
+            return Response({"error": "Logout failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 class GetUserProfile(APIView):
 
     @profile_schema
     def get(self,request):
-        user = request.user 
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
+        try:
+            user = request.user 
+            serializer = UserSerializer(user)
+            return Response(serializer.data)
+        except Exception as e:
+            logger.exception(f"Error fetching user profile: {e}")
+            return Response({"error": "Failed to fetch profile"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class RefreshTokenView(APIView):
     """ Generate new access token with refresh token if access token is expired."""
@@ -65,16 +80,16 @@ class RefreshTokenView(APIView):
 
     @refresh_schema
     def post(self,request):
-        refresh_token = request.COOKIES.get(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'])
-
-        if refresh_token is None:
-            return Response({"detail":"Session expired. Please log in again."},status=status.HTTP_401_UNAUTHORIZED)
-        
         try:
+            refresh_token = request.COOKIES.get(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'])
+
+            if refresh_token is None:
+                return Response({"detail":"Session expired. Please log in again."},status=status.HTTP_401_UNAUTHORIZED)
+            
             token = RefreshToken(refresh_token)
             access_token = str(token.access_token)
 
-            response = Response({"message":"New access token esthablished."},status=status.HTTP_200_OK)
+            response = Response({"message":"New access token established."},status=status.HTTP_200_OK)
 
             # Set access token in cookie 
             response.set_cookie(
@@ -87,7 +102,11 @@ class RefreshTokenView(APIView):
             )
 
             return response 
+        
         except TokenError as e:
-            return Response({"detail":"Session expired. Please log in again."},status=status.HTTP_401_UNAUTHORIZED)
-
+            logger.exception(f"Refresh token error: {e}")
+            return Response({"detail": "Session expired. Please log in again."}, status=status.HTTP_401_UNAUTHORIZED)
+        except Exception as e:
+            logger.exception(f"Unexpected error in token refresh: {e}")
+            return Response({"error": "Failed to refresh token"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
