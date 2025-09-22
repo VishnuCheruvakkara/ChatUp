@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ChatHeader from "../components/ChatHeader";
 import ChatBody from "../components/ChatBody";
 import ChatFooter from "../components/ChatFooter";
@@ -15,9 +15,17 @@ const ChatPage = () => {
   const { isOpen, openModal, closeModal } = useModal(false);
   const [loading, setLoading] = useState(false);
   const [chatRoom, setChatRoom] = useState(null);
+
   const [messages, setMessages] = useState([]);
+  const [nextUrl, setNextUrl] = useState(null)
+  const [isFetching, setIsFetching] = useState(false);
+
   const [onlineUsers, setOnlineUsers] = useState([]);
-  const currentUserId = useSelector((state) => state.user.userData?.id)
+
+  const containerRef = useRef(null);
+  const [lastMessageWasAppended, setLastMessageWasAppended] = useState(true);
+
+
 
   useEffect(() => {
     const getChatRoom = async () => {
@@ -35,20 +43,57 @@ const ChatPage = () => {
     getChatRoom();
   }, [roomId])
 
-  useEffect(()=>{
-    const getChatMessages = async () =>{
+  useEffect(() => {
+    const getChatMessages = async () => {
       setLoading(true);
-      try{
+      try {
         const response = await userAxios.get(`/chat/get-chat-messages/${roomId}`);
-        setMessages(response.data);
-      }catch(error){
-        console.error("Error while fetching the chats",error)
-      }finally{
+        setMessages(response.data.results.reverse());
+        setNextUrl(response.data.next);
+        console.log(response.data)
+      } catch (error) {
+        console.error("Error while fetching the chats", error)
+      } finally {
         setLoading(false);
       }
     }
     getChatMessages();
-  },[roomId])
+  }, [roomId])
+
+  const fetchNextPageMessages = async () => {
+    if (!nextUrl || isFetching) return;
+
+    setIsFetching(true);
+    const container = containerRef.current;
+    const oldHeight = container.scrollHeight;
+
+    try {
+      const response = await userAxios.get(nextUrl);
+      const nextPageMessages = response.data.results.reverse();
+
+      setMessages(prev => [...nextPageMessages, ...prev]);
+      setNextUrl(response.data.next);
+
+      setLastMessageWasAppended(false);
+
+      requestAnimationFrame(() => {
+        const newHeight = container.scrollHeight;
+        container.scrollTop = newHeight - oldHeight;
+      });
+
+    } catch (error) {
+      console.error("Error fetching older messages:", error)
+    } finally {
+      setIsFetching(false);
+    }
+  }
+
+
+  const handleScroll = (e) => {
+    if (e.target.scrollTop === 0) {
+      fetchNextPageMessages();
+    }
+  };
 
   const { sendMessage } = useChatSocket(roomId, (data) => {
     if (data.type === "user_list") {
@@ -63,6 +108,7 @@ const ChatPage = () => {
           time: data.timestamp,
         },
       ]);
+      setLastMessageWasAppended(true);
     }
   });
 
@@ -71,9 +117,6 @@ const ChatPage = () => {
     sendMessage(newMessage);
   };
 
-  useEffect(() => {
-
-  }, [])
 
   return (
     <>
@@ -83,13 +126,14 @@ const ChatPage = () => {
 
         <div className="flex border rounded-lg shadow-lg border-primary flex-col h-[500px] w-full max-w-5xl bg-bgBase">
           <ChatHeader chatRoom={chatRoom} onRoomDetailsClick={openModal} onlineUsers={onlineUsers.length} />
-          <ChatSidebar isOpen={isOpen} onClose={closeModal} chatRoom={chatRoom} onlineUsers={onlineUsers}/>
-          <ChatBody messages={messages} />
+          <ChatSidebar isOpen={isOpen} onClose={closeModal} chatRoom={chatRoom} onlineUsers={onlineUsers} />
+          <ChatBody messages={messages} onScroll={handleScroll} containerRef={containerRef} appendType={lastMessageWasAppended ? "append" : "prepend"} />
           <ChatFooter onSend={handleSend} />
         </div>
 
       )
       }
+
     </>
   );
 };

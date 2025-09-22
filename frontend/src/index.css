@@ -65,3 +65,7 @@
   background-color: #0ABAB5; /* color when user selects/copies text */
   color: #FFEDF3;            /* text color during selection */
 }
+
+.chat-scroll-container {
+  scroll-behavior: smooth;
+}

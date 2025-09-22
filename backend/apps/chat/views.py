@@ -78,16 +78,23 @@ class GetSingleChatRoom(APIView):
         except Exception as e:
             logger.exception(f"Error fetching room {room_id}: {e}")
             return Response({"error":"Failed to fetch room"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
+class ChatMessagePagination(PageNumberPagination):
+    page_size=5
+    page_size_query_param="page_size"
+    max_page_size=100 
+
 class GetChatMessages(APIView):
 
     @get_messages_schema
     def get(self, request, room_id):
         try:
             room = get_object_or_404(ChatRoom,id=room_id)
-            chats = room.chats.select_related('user').all()
-            serializer = ChatSerializer(chats, many=True)
-            return Response(serializer.data)
+            queryset=room.chats.select_related('user').order_by('-timestamp')
+            
+            paginator=ChatMessagePagination()
+            paginated_data=paginator.paginate_queryset(queryset,request)
+            serializer=ChatSerializer(paginated_data,many=True)
+            return paginator.get_paginated_response(serializer.data)
         except Exception as e:
             logger.exception(f"Error fetching messages fro room {room_id} : {e}")
             return Response({"error":"Failed to fetch messages"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
