@@ -29,7 +29,7 @@ class RefreshTokenViewTest(APITestCase):
 
         response = self.client.post(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["message"], "New access token esthablished.")
+        self.assertEqual(response.data["message"], "New access token established.")
 
         access_cookie_name = settings.SIMPLE_JWT['AUTH_COOKIE_ACCESS']
         self.assertIn(access_cookie_name, response.cookies)

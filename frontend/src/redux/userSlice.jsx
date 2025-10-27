@@ -19,7 +19,8 @@ const userSlice = createSlice({
       state.loading=false;
     },
     finishLoading : (state) =>{
-        state.loading = false;
+      state.loading = false;
+      
     }
   },
 });

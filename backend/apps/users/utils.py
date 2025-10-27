@@ -5,7 +5,7 @@ from django.conf import settings
 logger = logging.getLogger(__name__)
 
 def set_jwt_cookies(response,user):
-    """Unitlity for set jwt token in cookies"""
+    """Utility for set jwt token in cookies"""
 
     refresh = RefreshToken.for_user(user)
     access_token = str(refresh.access_token)
