@@ -78,4 +78,4 @@ class TestAuthIntegration:
         self.client.cookies = res.cookies  
         res = self.client.post(self.refresh_url)
         assert res.status_code == status.HTTP_200_OK
-        assert "New access token esthablished." in res.data["message"]
+        assert "New access token established." in res.data["message"]

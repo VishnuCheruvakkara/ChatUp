@@ -18,11 +18,12 @@ class GetChatMessagesTest(APITestCase):
         self.client.force_authenticate(user=self.user)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
-        self.assertEqual(response.data[0]["user"], self.user.username)
-        self.assertEqual(response.data[0]["userId"], self.user.id)
-        self.assertIn("text", response.data[0])
-        self.assertIn("time", response.data[0])
+        self.assertEqual(len(response.data["results"]), 2)
+        self.assertEqual(response.data["results"][0]["user"], self.user.username)
+        self.assertEqual(response.data["results"][0]["userId"], self.user.id)
+        self.assertIn("text", response.data["results"][0])
+        self.assertIn("time", response.data["results"][0])
+
 
     def test_get_chat_messages_unauthenticated(self):
         response = self.client.get(self.url)

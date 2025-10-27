@@ -11,6 +11,7 @@ from chat.swagger_schemas import (
     create_room_schema, get_rooms_schema, delete_room_schema,
     get_single_room_schema, get_messages_schema
 )
+from django.http import Http404
 logger=logging.getLogger(__name__)
 
 class CreateChatRoom(APIView):
@@ -64,6 +65,8 @@ class DeleteRoom(APIView):
             room.is_deleted = True
             room.save()
             return Response({"message":"Room deleted successfully"},status=status.HTTP_200_OK)
+        except Http404:
+            return Response({"detail": "Chat room not found."}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             logger.exception(f"Error deleting room {room_id}: {e}")
             return Response({"error":"Failed to delete room"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -75,6 +78,8 @@ class GetSingleChatRoom(APIView):
             room = get_object_or_404(ChatRoom, id=room_id)
             serializer = ChatRoomSerializer(room)
             return Response(serializer.data,status=status.HTTP_200_OK)
+        except Http404:
+            raise 
         except Exception as e:
             logger.exception(f"Error fetching room {room_id}: {e}")
             return Response({"error":"Failed to fetch room"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -89,8 +94,11 @@ class GetChatMessages(APIView):
     def get(self, request, room_id):
         try:
             room = get_object_or_404(ChatRoom,id=room_id)
+        except ChatRoom.DoesNotExist:
+            raise Http404("Chat room not found")
+        try:
             queryset=room.chats.select_related('user').order_by('-timestamp')
-            
+        
             paginator=ChatMessagePagination()
             paginated_data=paginator.paginate_queryset(queryset,request)
             serializer=ChatSerializer(paginated_data,many=True)

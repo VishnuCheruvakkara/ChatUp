@@ -40,6 +40,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
         try:
             if self.user:
                 await self.remove_online_user(self.user.username)
+                await self.broadcast_user_list()
             
             await self.channel_layer.group_discard(
                 self.room_group_name,
@@ -50,7 +51,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
         finally:
             if hasattr(self,'redis'):
                 try:
-                    await self.redis.close()
+                    await self.redis.aclose()
                     await self.redis.connection_pool.disconnect()
                 except Exception as e:
                     logger.warning(f"Redis diconnect error : {e}")
