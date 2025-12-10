@@ -3,7 +3,7 @@
 A simple and scalable CMS platform with **React frontend** and **Django backend**. Publish blogs, read posts, like/unlike, and add comments with secure JWT authentication.
 
 <p align="center">
-  <img src="./assets/contenthive-home.jpg" alt="ContentHive home page" width="100%" style="border-radius: 16px;" />
+  <img src="./assets/ContentHive.jpg" alt="ContentHive home page" width="100%" style="border-radius: 16px;" />
 </p>
 
 <p align="center">
