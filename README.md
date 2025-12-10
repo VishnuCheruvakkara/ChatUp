@@ -1,208 +1,165 @@
-# ChatUp
-ChatUp is a full-stack chat communication application. It uses Django for the backend, React for the frontend, and WebSockets for real-time communication.
+# ContentHive
+
+A simple and scalable CMS platform with **React frontend** and **Django backend**. Publish blogs, read posts, like/unlike, and add comments with secure JWT authentication.
 
 <p align="center">
-  <img src="./assets/chatUPHome.jpg" alt="ChatUp home page" width="100%" style="border-radius: 16px;" />
+  <img src="./assets/contenthive-home.jpg" alt="ContentHive home page" width="100%" style="border-radius: 16px;" />
 </p>
 
 <p align="center">
-  <a href="https://chat-up-brown.vercel.app/" target="_blank">
-    <img alt="View Live Project" src="https://img.shields.io/badge/Live%20Demo-0abab5?style=for-the-badge&logo=vercel&logoColor=white" />
+  <a href="#" target="_blank">
+    <img alt="Live Demo" src="https://img.shields.io/badge/Live%20Demo-0abab5?style=for-the-badge&logo=vercel&logoColor=white" />
   </a>
   &nbsp;
-  <a href="https://youtu.be/gpeeS5kXEZY" target="_blank">
-    <img alt="Watch Demo Video" src="https://img.shields.io/badge/Demo%20Video-FF0000?style=for-the-badge&logo=youtube&logoColor=white" />
+  <a href="#" target="_blank">
+    <img alt="Demo Video" src="https://img.shields.io/badge/Demo%20Video-FF0000?style=for-the-badge&logo=youtube&logoColor=white" />
   </a>
   &nbsp;
-  <a href="https://www.linkedin.com/posts/vishnu-cheruvakkara-231b8b235_django-reactjs-webdevelopment-activity-7363606238938484736-sult?utm_source=share&utm_medium=member_desktop&rcm=ACoAADq6p4UB7yZEvBWQ6nbkRJlURS5jqlFv_yI" target="_blank">
+  <a href="https://www.linkedin.com/in/vishnu-cheruvakkara" target="_blank">
     <img alt="Connect on LinkedIn" src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=logmein&logoColor=white" />
   </a>
 </p>
 
+---
 
+## 📌 Table of Contents
 
-## Table of Contents
-- Features
-- Technologies Used
-- Installation and Setup
-- Testing
-- Contributing
-- License
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Backend Setup](#backend-setup)
+- [Frontend Setup](#frontend-setup)
+- [Admin Features](#admin-features)
+- [User Features](#user-features)
+- [Contributing](#contributing)
+- [License](#license)
 
 ---
 
-## Features
-- Secure authentication
-- Real-time chat messaging    
-- Chat room creation and management  
-- Responsive design
-  
-## Technologies Used
+## 🚀 Features
 
-- **Backend (Django)**
-  - Django, Django REST Framework, Django Channels  
-  - JWT authentication  
-  - WebSocket support  
-  - APIs for room management
+- JWT-based secure authentication
+- Blog post create/update/delete
+- Image upload via Cloudinary
+- File storage via Supabase
+- Like/unlike system
+- User comments with admin approval
+- Fully responsive UI
 
-- **Frontend (React)**
-  - React, Axios  
-  - Registration & login forms  
-  - Chat interface  
+---
 
-- **Others**
-  - Redis for WebSockets  
+## 🛠️ Technologies Used
 
-- **Integration**
-  - JWT authentication connected between frontend and backend (access and refresh token both handled in cookie as http only)
-  - WebSocket real-time updates
-    
-## Installation and Setup
-1. Clone the repository
-   
-  ```
-  git clone https://github.com/VishnuCheruvakkara/ChatUp.git
+**Backend:** Django, Django REST Framework, JWT, PostgreSQL, Cloudinary, Supabase
 
-  cd ChatUp
-  ```
-   
-### Backend (Django) Setup
+**Frontend:** React, Axios, React Router, Tailwind CSS
 
-1. Create and activate a virtual environment
-   
-  ```
-  cd backend
-  ```
-2. Create and activate a virtual environment
-   
-  ```
-  python -m venv env
-  ```
-  > activate env on Windows
-  ```
-  env\Scripts\activate
-  ```
+---
 
-  > activate env macOS/Linux
-  
-  ```
-  source env/bin/activate
-  ```
+## 🔧 Backend Setup
 
-3. Install dependencies
-   ```
-   pip install -r requirements.txt
-   ```
+### Clone & Install
 
-4. Configure environment variables
-       
-  - Create a new `.env` file in the backend folder.  
-  - Copy the contents of `.env.example` into `.env`.  
-  - Update the placeholder values with your actual local configuration (e.g., `SECRET_KEY`, `DEBUG`, `DATABASE_URL`, `REDIS_URL`, etc.).
+```bash
+git clone https://github.com/VishnuCheruvakkara/ContentHive.git
+cd ContentHive/backend
+```
 
-5. Install Redis (required for WebSocket communication)
-   - Windows:
-     
-     On Windows, you can use Memurai (a lightweight Redis alternative), Redis for Windows from the      GitHub archive (older but works), or WSL (Windows Subsystem for Linux) to run the native           Linux version inside Windows.
-    
-     
-   - macOS:
-     ```
-     brew install redis
-     brew services start redis
-     ```
-   - Linux (Ubuntu/Debian):
-     ```
-     sudo apt update
-     sudo apt install redis-server
-     sudo systemctl enable redis-server
-     sudo systemctl start redis-server
-     ```
-     
-   Verify installation by running:
-   ```
-   redis-cli ping
-   ```
-   Note : After running the above command you will get a reponse as : PONG
+### Create Virtual Environment
 
-6. Apply database migrations
-   
-   ```
-   python manage.py migrate
-   ```
-   
-7. Create a superuser (for admin access)
-   ```
-   python manage.py createsuperuser
-   ```
+```bash
+python -m venv env
 
-8. Run the development server
-     You can use either Daphne or Uvicorn:
+# Windows
+env\Scripts\activate
 
-      - Run with Daphne:
-          ```
-          daphne project_chatup.asgi:application
-          ```
-      - Run with Uvicorn:
-          ```
-          uvicorn project_chatup.asgi:application --reload
-          ```
+# macOS/Linux
+source env/bin/activate
+```
 
-    Backend will now be running at: http://127.0.0.1:8000/
+### Install Dependencies & Setup
 
-   
-### Frontend (React) Setup
+```bash
+pip install -r requirements.txt
+```
 
-  1. Navigate to the frontend folder:
-     
-      ```
-      cd frontend
-      ```
-  2. Install dependencies:
-      ```
-      npm install
-      ```
-      
-  3. Configure environment variables:
-      - Create a new `.env` file in the frontend folder.  
-      - Copy the contents of `.env.example` into `.env`.  
-      - Update values (e.g., `VITE_API_BASE_URL`, `VITE_WS_URL`) according to your local backend           setup.  
+### Environment Variables
 
-  4. Start the Vite development server:
-      ```
-      npm run dev
-      ```
+Rename `.env.example` to `.env` and add your values:
 
-  The frontend will now be running at: http://localhost:5173/ (default Vite port).
-   
-## Testing
+```bash
+mv .env.example .env
+```
 
-### Test Backend
+### Database & Run
 
-- Run **all tests**:  
-  `pytest -v`
-  
-- Run only **unit tests**:
- 
-  `pytest .\apps\users\test`
-  
-  `pytest .\apps\chat\test`
-  
-- Run only **integration tests**:
-  `pytest integration_test`
-  
-### Test Frontend
+```bash
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver
+```
 
-- Frontend tests: `npm run test`  
+Backend: **http://127.0.0.1:8000/**
 
-## Contributing
-Note : This project was developed as part of a machine test.  
-Contributions are not required, but if you’d like to suggest improvements, feel free to open an issue or pull request.
+---
 
-- Fork the repository  
-- Create a new branch  
-- Commit changes  
-- Open a pull request  
+## ⚛️ Frontend Setup
 
-## License
-This project is for machine test purposes.
+### Install & Run
+
+```bash
+cd frontend
+npm install
+```
+
+### Environment Variables
+
+Rename `.env.example` to `.env` and add your values:
+
+```bash
+mv .env.example .env
+```
+
+### Start Dev Server
+
+```bash
+npm run dev
+```
+
+Frontend: **http://localhost:5173/**
+
+---
+
+## 🔐 Admin Features
+
+- Manage users, posts, and comments
+- Approve/block comments
+- Upload images & files
+- Cloud storage integration
+
+---
+
+## 📝 User Features
+
+- View all blog posts
+- Read full blogs
+- Leave comments
+- Like/unlike posts
+- Track view counts
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repo
+2. Create a branch (`git checkout -b feature/your-feature`)
+3. Commit changes (`git commit -m 'Add feature'`)
+4. Push (`git push origin feature/your-feature`)
+5. Open a PR
+
+---
+
+## 📄 License
+
+Open for educational and development use.
+
+---
