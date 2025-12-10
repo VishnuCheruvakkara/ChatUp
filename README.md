@@ -8,7 +8,7 @@ A simple and scalable CMS platform with **React frontend** and **Django backend*
 
 <p align="center">
   <a href="#" target="_blank">
-    <img alt="Live Demo" src="https://img.shields.io/badge/Live%20Demo-0abab5?style=for-the-badge&logo=vercel&logoColor=white" />
+    <img alt="Live Demo" src="https://img.shields.io/badge/Live%20Demo-c95792?style=for-the-badge&logo=vercel&logoColor=white" />
   </a>
   &nbsp;
   <a href="#" target="_blank">
